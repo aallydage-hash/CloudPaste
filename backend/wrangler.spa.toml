@@ -58,3 +58,4 @@ run_worker_first = ["/api/*", "/dav/*"]
 # 2. 静态文件存在 -> 直接返回（不调用 Worker）
 # 3. 前端路由（浏览器导航）-> 返回 index.html（SPA fallback）
 # 4. 导航请求在 compatibility_date >= 2025-04-01 时不计费
+# Trigger Deploy
