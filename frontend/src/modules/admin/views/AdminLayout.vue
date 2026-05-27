@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen" :class="darkMode ? 'bg-gray-900' : 'bg-gray-100'">
+  <div class="h-screen" :class="darkMode ? 'bg-custom-bg-900' : 'bg-gray-100'">
     <AdminSidebar
       :dark-mode="darkMode"
       :permissions="userPermissions"
@@ -15,13 +15,13 @@
     <!-- 主内容区域 - 混合导航模式，响应侧边栏收缩状态 -->
     <main
       class="w-full md:w-auto md:fixed md:left-64 md:top-16 md:right-0 md:bottom-0 md:overflow-y-auto focus:outline-none z-40 transition-all duration-300"
-      :class="[sidebarCollapsed ? 'md:left-16' : 'md:left-64', darkMode ? 'bg-gray-900' : 'bg-white md:bg-gray-100']"
+      :class="[sidebarCollapsed ? 'md:left-16' : 'md:left-64', darkMode ? 'bg-custom-bg-900' : 'bg-white md:bg-gray-100']"
     >
       <!-- 背景颜色包装器 -->
-      <div class="min-h-full flex flex-col pt-2 md:pt-4 pb-4 px-2 sm:px-4 md:px-6 lg:px-8" :class="darkMode ? 'bg-gray-900' : 'bg-gray-100 md:bg-transparent'">
+      <div class="min-h-full flex flex-col pt-2 md:pt-4 pb-4 px-2 sm:px-4 md:px-6 lg:px-8" :class="darkMode ? 'bg-custom-bg-900' : 'bg-gray-100 md:bg-transparent'">
         <!-- 内容区域 -->
         <div class="w-full mx-auto flex-1 flex flex-col" style="max-width: 1280px">
-          <div class="rounded-lg flex-1 flex flex-col" :class="darkMode ? 'bg-gray-800' : 'bg-white border border-gray-200'">
+          <div class="rounded-lg flex-1 flex flex-col" :class="darkMode ? 'bg-custom-surface-dark border border-white/[0.05]' : 'bg-white border border-gray-200'">
             <!-- 页面内容 -->
             <div class="p-2 md:p-4 flex-1 flex flex-col">
               <router-view :permissions="userPermissions" :dark-mode="darkMode" @logout="handleLogout" />

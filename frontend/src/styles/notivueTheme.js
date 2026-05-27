@@ -39,37 +39,37 @@ export const cloudPasteDarkTheme = {
   ...darkTheme,
 
   // ===== 暗色背景适配 =====
-  "--nv-global-bg": "#1f2937",
-  "--nv-global-fg": "#f3f4f6",
-  "--nv-global-border": "#374151",
+  "--nv-global-bg": "#0f1011",
+  "--nv-global-fg": "#f7f8f8",
+  "--nv-global-border": "rgba(255, 255, 255, 0.08)",
 
   // ===== Success - 绿色系 =====
-  "--nv-success-accent": "#34d399",
-  "--nv-success-bg": "#1f2937",
-  "--nv-success-fg": "#f3f4f6",
-  "--nv-success-border": "#065f46",
+  "--nv-success-accent": "#10b981",
+  "--nv-success-bg": "#191a1b",
+  "--nv-success-fg": "#f7f8f8",
+  "--nv-success-border": "rgba(16, 185, 129, 0.2)",
 
   // ===== Error - 红色系 =====
-  "--nv-error-accent": "#f87171",
-  "--nv-error-bg": "#1f2937",
-  "--nv-error-fg": "#f3f4f6",
-  "--nv-error-border": "#991b1b",
+  "--nv-error-accent": "#ef4444",
+  "--nv-error-bg": "#191a1b",
+  "--nv-error-fg": "#f7f8f8",
+  "--nv-error-border": "rgba(239, 68, 68, 0.2)",
 
   // ===== Warning - 黄色系 =====
-  "--nv-warning-accent": "#fbbf24",
-  "--nv-warning-bg": "#1f2937",
-  "--nv-warning-fg": "#f3f4f6",
-  "--nv-warning-border": "#92400e",
+  "--nv-warning-accent": "#f59e0b",
+  "--nv-warning-bg": "#191a1b",
+  "--nv-warning-fg": "#f7f8f8",
+  "--nv-warning-border": "rgba(245, 158, 11, 0.2)",
 
   // ===== Info - 蓝色系 =====
-  "--nv-info-accent": "#60a5fa",
-  "--nv-info-bg": "#1f2937",
-  "--nv-info-fg": "#f3f4f6",
-  "--nv-info-border": "#1e40af",
+  "--nv-info-accent": "#3b82f6",
+  "--nv-info-bg": "#191a1b",
+  "--nv-info-fg": "#f7f8f8",
+  "--nv-info-border": "rgba(59, 130, 246, 0.2)",
 
   // ===== Promise/Loading - 紫色系 =====
-  "--nv-promise-accent": "#a78bfa",
-  "--nv-promise-bg": "#1f2937",
-  "--nv-promise-fg": "#f3f4f6",
-  "--nv-promise-border": "#5b21b6",
+  "--nv-promise-accent": "#8b5cf6",
+  "--nv-promise-bg": "#191a1b",
+  "--nv-promise-fg": "#f7f8f8",
+  "--nv-promise-border": "rgba(139, 92, 246, 0.2)",
 };

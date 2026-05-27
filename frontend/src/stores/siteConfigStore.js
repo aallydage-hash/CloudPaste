@@ -69,8 +69,8 @@ const updatePageFavicon = (faviconUrl) => {
       faviconLink.type = getFaviconType(finalUrl);
     } else {
       // 使用默认favicon
-      faviconLink.href = "/cloudpaste.svg";
-      faviconLink.type = "image/svg+xml";
+      faviconLink.href = "/favicon.png";
+      faviconLink.type = "image/png";
     }
 
     log.debug("页面favicon已更新:", faviconLink.href);
@@ -80,8 +80,8 @@ const updatePageFavicon = (faviconUrl) => {
     try {
       let faviconLink = document.querySelector('link[rel="icon"]');
       if (faviconLink) {
-        faviconLink.href = "/cloudpaste.svg";
-        faviconLink.type = "image/svg+xml";
+        faviconLink.href = "/favicon.png";
+        faviconLink.type = "image/png";
       }
     } catch (fallbackError) {
       log.error("设置默认favicon也失败:", fallbackError);

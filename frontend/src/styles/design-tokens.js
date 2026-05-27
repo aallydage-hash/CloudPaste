@@ -112,12 +112,12 @@ export const semanticColors = {
     surfaceElevated: 'rgb(249, 250, 251)',
   },
   dark: {
-    hover: 'rgba(255, 255, 255, 0.06)',
-    selected: 'rgba(59, 130, 246, 0.2)',
-    muted: 'rgb(156, 163, 175)',
-    border: 'rgb(55, 65, 81)',
-    surface: 'rgb(31, 41, 55)',
-    surfaceElevated: 'rgb(55, 65, 81)',
+    hover: 'rgba(255, 255, 255, 0.05)',
+    selected: 'rgba(59, 130, 246, 0.15)',
+    muted: '#8a8f98',
+    border: 'rgba(255, 255, 255, 0.08)',
+    surface: '#0f1011',
+    surfaceElevated: '#191a1b',
   },
 }
 

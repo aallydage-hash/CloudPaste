@@ -3,17 +3,17 @@
     <!-- 桌面端侧边栏 - 为全局header留出空间，支持收缩 -->
     <div
       class="hidden md:block fixed left-0 top-16 border-r shadow-md z-30 transition-all duration-300"
-      :class="[isCollapsed ? 'w-16' : 'w-64', 'h-[calc(100vh-4rem)]', darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200']"
+      :class="[isCollapsed ? 'w-16' : 'w-64', 'h-[calc(100vh-4rem)]', darkMode ? 'bg-custom-surface-dark border-white/[0.05]' : 'bg-white border-gray-200']"
     >
       <div class="flex flex-col h-full">
         <!-- 桌面端头部区域 - Logo + 标题 + 收缩按钮 -->
-        <div class="h-16 flex-shrink-0 border-b flex items-center" :class="darkMode ? 'border-gray-700' : 'border-gray-200'">
+        <div class="h-16 flex-shrink-0 border-b flex items-center" :class="darkMode ? 'border-white/[0.05]' : 'border-gray-200'">
           <!-- 统一容器，避免重复创建img元素 -->
           <div class="relative w-full h-full flex items-center" :class="isCollapsed ? 'justify-center' : 'px-4'">
             <!-- 站点图标 - 单一元素，通过CSS控制位置 -->
             <div class="flex-shrink-0 w-8 h-8" :class="isCollapsed ? '' : 'mr-3'">
               <img
-                :src="siteFaviconUrl || '/cloudpaste.svg'"
+                :src="siteFaviconUrl || '/favicon.png'"
                 :alt="siteTitle"
                 class="w-8 h-8 object-contain"
                 :title="isCollapsed ? `${siteTitle} - ${userTypeText}` : siteTitle"
@@ -55,7 +55,7 @@
                 v-if="!isCollapsed"
                 @click="toggleCollapse"
                 class="p-1.5 rounded-md transition-colors ml-2 flex-shrink-0"
-                :class="darkMode ? 'text-gray-400 hover:text-gray-200 hover:bg-gray-700' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'"
+                :class="darkMode ? 'text-gray-400 hover:text-gray-200 hover:bg-white/[0.05]' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'"
                 :title="t('admin.sidebar.collapse')"
               >
                 <IconChevronLeft size="sm" aria-hidden="true" />
@@ -69,7 +69,7 @@
               class="absolute -right-3 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-full border shadow-sm transition-all flex items-center justify-center"
               :class="
                 darkMode
-                  ? 'bg-gray-800 border-gray-600 text-gray-300 hover:text-white hover:bg-gray-700'
+                  ? 'bg-custom-surface-dark border-white/[0.08] text-gray-300 hover:text-white hover:bg-white/[0.05]'
                   : 'bg-white border-gray-200 text-gray-600 hover:text-gray-900 hover:bg-gray-50'
               "
               :title="t('admin.sidebar.expand')"
@@ -90,10 +90,10 @@
                 :class="[
                   $route.name === item.routeName
                     ? darkMode
-                      ? 'bg-gray-900 text-white'
+                      ? 'bg-white/[0.1] text-white'
                       : 'bg-gray-100 text-gray-900'
                     : darkMode
-                    ? 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                    ? 'text-gray-300 hover:bg-white/[0.05] hover:text-white'
                     : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                   'group flex items-center text-sm font-medium rounded-md transition-colors',
                   isCollapsed ? 'px-3 py-3 justify-center' : 'px-3 py-2.5',
@@ -132,7 +132,7 @@
                   v-if="isCollapsed"
                   @click="handleGroupItemClick"
                   :class="[
-                    darkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                    darkMode ? 'text-gray-300 hover:bg-white/[0.05] hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                     'w-full group flex items-center px-3 py-3 justify-center text-sm font-medium rounded-md cursor-pointer transition-colors',
                   ]"
                   :title="item.name"
@@ -152,7 +152,7 @@
                   <button
                     @click="item.id === 'system-settings' ? toggleSystemSettings() : toggleTaskManagement()"
                     :class="[
-                      darkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                      darkMode ? 'text-gray-300 hover:bg-white/[0.05] hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                       'w-full group flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-md cursor-pointer',
                     ]"
                   >
@@ -206,10 +206,10 @@
                       :class="[
                         $route.name === child.routeName
                           ? darkMode
-                            ? 'bg-gray-900 text-white'
+                            ? 'bg-white/[0.1] text-white'
                             : 'bg-gray-100 text-gray-900'
                           : darkMode
-                          ? 'text-gray-400 hover:bg-gray-700 hover:text-white'
+                          ? 'text-gray-400 hover:bg-white/[0.05] hover:text-white'
                           : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900',
                         'group flex items-center px-3 py-2 text-sm font-medium rounded-md',
                       ]"
@@ -243,11 +243,11 @@
             </template>
 
             <!-- 退出登录按钮 -->
-            <div class="pt-4 mt-4 border-t" :class="darkMode ? 'border-gray-700' : 'border-gray-200'">
+            <div class="pt-4 mt-4 border-t" :class="darkMode ? 'border-white/[0.05]' : 'border-gray-200'">
               <a
                 @click="handleLogout"
                 :class="[
-                  darkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                  darkMode ? 'text-gray-300 hover:bg-white/[0.05] hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                   'group flex items-center text-sm font-medium rounded-md cursor-pointer transition-colors',
                   isCollapsed ? 'px-3 py-3 justify-center' : 'px-3 py-2.5',
                 ]"
@@ -303,14 +303,14 @@
         <div class="fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity" @click="$emit('close-mobile-sidebar')"></div>
 
         <!-- 侧边栏内容 -->
-        <div class="relative flex-1 flex flex-col w-full max-w-xs shadow-xl transform transition-transform ease-in-out duration-300" :class="darkMode ? 'bg-gray-800' : 'bg-white'">
+        <div class="relative flex-1 flex flex-col w-full max-w-xs shadow-xl transform transition-transform ease-in-out duration-300" :class="darkMode ? 'bg-custom-surface-dark' : 'bg-white'">
           <!-- 移动端侧边栏Logo + 标题和关闭按钮 -->
-          <div class="flex items-center justify-between p-3 h-14 border-b" :class="darkMode ? 'border-gray-700' : 'border-gray-200'">
+          <div class="flex items-center justify-between p-3 h-14 border-b" :class="darkMode ? 'border-white/[0.05]' : 'border-gray-200'">
             <!-- Logo + 标题 -->
             <div class="flex items-center flex-1 min-w-0">
               <!-- 站点图标 -->
               <div class="flex-shrink-0 w-8 h-8 mr-3">
-                <img :src="siteFaviconUrl || '/cloudpaste.svg'" :alt="siteTitle" class="w-8 h-8 object-contain" @error="handleImageError" />
+                <img :src="siteFaviconUrl || '/favicon.png'" :alt="siteTitle" class="w-8 h-8 object-contain" @error="handleImageError" />
               </div>
 
               <!-- 标题信息 -->
@@ -346,10 +346,10 @@
                   :class="[
                     $route.name === item.routeName
                       ? darkMode
-                        ? 'bg-gray-900 text-white'
+                        ? 'bg-white/[0.1] text-white'
                         : 'bg-gray-100 text-gray-900'
                       : darkMode
-                      ? 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                      ? 'text-gray-300 hover:bg-white/[0.05] hover:text-white'
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                     'group flex items-center px-3 py-2.5 text-sm font-medium rounded-md',
                   ]"
@@ -371,7 +371,7 @@
                   <a
                     @click="item.id === 'system-settings' ? toggleSystemSettings() : toggleTaskManagement()"
                     :class="[
-                      darkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                      darkMode ? 'text-gray-300 hover:bg-white/[0.05] hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                       'group flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-md cursor-pointer',
                     ]"
                   >
@@ -402,10 +402,10 @@
                       :class="[
                         $route.name === child.routeName
                           ? darkMode
-                            ? 'bg-gray-900 text-white'
+                            ? 'bg-white/[0.1] text-white'
                             : 'bg-gray-100 text-gray-900'
                           : darkMode
-                          ? 'text-gray-400 hover:bg-gray-700 hover:text-white'
+                          ? 'text-gray-400 hover:bg-white/[0.05] hover:text-white'
                           : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900',
                         'group flex items-center px-3 py-2 text-sm font-medium rounded-md',
                       ]"
@@ -426,11 +426,11 @@
               </template>
 
               <!-- 退出登录按钮 -->
-              <div class="pt-4 mt-4 border-t" :class="darkMode ? 'border-gray-700' : 'border-gray-200'">
+              <div class="pt-4 mt-4 border-t" :class="darkMode ? 'border-white/[0.05]' : 'border-gray-200'">
                 <a
                   @click="handleLogout"
                   :class="[
-                    darkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                    darkMode ? 'text-gray-300 hover:bg-white/[0.05] hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                     'group flex items-center px-3 py-2.5 text-sm font-medium rounded-md cursor-pointer',
                   ]"
                 >
@@ -514,7 +514,7 @@ const logoutText = computed(() => (props.permissions.isAdmin ? t("admin.sidebar.
 
 // 图标错误处理 - 直接切换到默认图标
 const handleImageError = (event) => {
-  event.target.src = "/cloudpaste.svg";
+  event.target.src = "/favicon.png";
 };
 
 // 常量

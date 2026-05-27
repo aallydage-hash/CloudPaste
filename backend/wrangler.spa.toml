@@ -15,7 +15,7 @@ local_protocol = "http"
 # 环境变量
 [vars]
 # 用于加密敏感配置的密钥
-ENCRYPTION_SECRET = "default-encryption-key"
+ENCRYPTION_SECRET = "9c2a8f3b6d7e1c4a5f8e0b2d3c9a1f4e"
 # 管理员Token过期天数，默认7天
 ADMIN_TOKEN_EXPIRY_DAYS = "7"
 #
@@ -28,7 +28,7 @@ ADMIN_TOKEN_EXPIRY_DAYS = "7"
 [[d1_databases]]
 binding = "DB"
 database_name = "cloudpaste-db"
-database_id = "xxxxxxxxxxxxxxxxx"
+database_id = "a1452b1e-01d7-4ed0-99c7-8bb9f9caa458"
 
 # Cloudflare Workflows 绑定
 # 用于异步任务作业的持久化执行 (支持多任务类型)

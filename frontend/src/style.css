@@ -6,6 +6,24 @@
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Premium Light Theme Variables */
+  --custom-bg-light: #fafafa;
+  --custom-surface-light: #ffffff;
+  --custom-text-light: #171717;
+
+  /* Default Tailwind Light Gray Variables (RGB values) */
+  --gray-50: 249 250 251;
+  --gray-100: 243 244 246;
+  --gray-200: 229 231 235;
+  --gray-300: 209 213 219;
+  --gray-400: 156 163 175;
+  --gray-500: 107 114 128;
+  --gray-600: 75 85 99;
+  --gray-700: 55 65 81;
+  --gray-800: 31 41 55;
+  --gray-900: 17 24 39;
+  --gray-950: 3 7 18;
 }
 
 html {
@@ -15,25 +33,25 @@ html {
 /* Match header background to hide overscroll gap */
 body {
   min-height: 100vh;
-  @apply bg-custom-surface transition-colors duration-200;
+  @apply bg-custom-surface text-custom-text transition-colors duration-200;
 }
 
 .dark body {
-  @apply bg-custom-surface-dark;
+  @apply bg-custom-bg-900 text-custom-text-dark;
 }
 
 /* 自定义组件样式 */
 @layer components {
   .btn-primary {
-    @apply px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors duration-200;
+    @apply px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 shadow-sm transition-colors duration-200;
   }
 
   .btn-secondary {
-    @apply px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600;
+    @apply px-4 py-2 bg-white text-gray-700 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors duration-200 dark:bg-white/[0.03] dark:text-gray-200 dark:border-white/[0.08] dark:hover:bg-white/[0.05];
   }
 
   .form-input {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 dark:focus:ring-primary-600 dark:focus:border-primary-600;
+    @apply w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 transition-all duration-200 dark:bg-white/[0.02] dark:border-white/[0.08] dark:text-gray-100 dark:focus:ring-primary-500/50 dark:focus:border-primary-500;
   }
 
   .form-label {
@@ -41,13 +59,31 @@ body {
   }
 
   .card {
-    @apply bg-custom-surface rounded-lg shadow-md overflow-hidden transition-colors duration-200 dark:bg-custom-surface-dark dark:border-gray-700;
+    @apply bg-custom-surface rounded-xl shadow-sm border border-gray-100/[0.5] overflow-hidden transition-colors duration-200 dark:bg-custom-surface-dark dark:border-white/[0.05] dark:shadow-none;
   }
 }
 
 /* 暗色模式样式通过 class 控制，而不是媒体查询 */
 .dark {
   color-scheme: dark;
+  
+  /* Premium Dark Theme Variables (Linear-inspired) */
+  --custom-bg-dark: #08090a;
+  --custom-surface-dark: #0f1011;
+  --custom-text-dark: #f7f8f8;
+
+  /* Premium Dark Theme Variables (Linear-inspired RGB values) */
+  --gray-50: 250 250 250;
+  --gray-100: 244 244 245;
+  --gray-200: 228 228 231;
+  --gray-300: 212 212 216;
+  --gray-400: 138 143 152; /* Muted cool gray (#8a8f98) */
+  --gray-500: 115 115 119;
+  --gray-600: 25 26 27;     /* Elevated panel border/bg (#191a1b) */
+  --gray-700: 34 35 36;     /* Thin dark borders/dividers (#222324) */
+  --gray-800: 15 16 17;     /* Surface panels/cards (#0f1011) */
+  --gray-900: 8 9 10;       /* Deepest canvas background (#08090a) */
+  --gray-950: 4 5 6;
 }
 
 /* 移动设备优化 */

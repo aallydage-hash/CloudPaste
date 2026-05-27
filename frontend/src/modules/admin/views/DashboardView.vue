@@ -125,16 +125,16 @@ const getStorageListBySource = (source) => {
 // 存储类型颜色映射
 const STORAGE_TYPE_COLORS = {
   LOCAL: { bg: "bg-blue-500", text: "text-blue-500" },
-  S3: { bg: "bg-orange-500", text: "text-orange-500" },
-  WEBDAV: { bg: "bg-green-500", text: "text-green-500" },
-  ONEDRIVE: { bg: "bg-sky-500", text: "text-sky-500" },
-  GOOGLE_DRIVE: { bg: "bg-yellow-500", text: "text-yellow-500" },
-  TELEGRAM: { bg: "bg-cyan-500", text: "text-cyan-500" },
-  DISCORD: { bg: "bg-indigo-500", text: "text-indigo-500" },
-  GITHUB_RELEASES: { bg: "bg-slate-400", text: "text-slate-400" },
-  GITHUB_API: { bg: "bg-zinc-400", text: "text-zinc-400" },
-  HUGGINGFACE_DATASETS: { bg: "bg-amber-500", text: "text-amber-500" },
-  MIRROR: { bg: "bg-purple-500", text: "text-purple-500" },
+  S3: { bg: "bg-gray-500", text: "text-gray-500" },
+  WEBDAV: { bg: "bg-gray-500", text: "text-gray-500" },
+  ONEDRIVE: { bg: "bg-gray-500", text: "text-gray-500" },
+  GOOGLE_DRIVE: { bg: "bg-gray-500", text: "text-gray-500" },
+  TELEGRAM: { bg: "bg-gray-500", text: "text-gray-500" },
+  DISCORD: { bg: "bg-gray-500", text: "text-gray-500" },
+  GITHUB_RELEASES: { bg: "bg-gray-400", text: "text-gray-400" },
+  GITHUB_API: { bg: "bg-gray-400", text: "text-gray-400" },
+  HUGGINGFACE_DATASETS: { bg: "bg-gray-500", text: "text-gray-500" },
+  MIRROR: { bg: "bg-gray-500", text: "text-gray-500" },
 };
 
 // 加载状态
@@ -176,8 +176,8 @@ const chartData = computed(() => {
       },
       {
         label: t("admin.dashboard.totalFiles"),
-        backgroundColor: props.darkMode ? "rgba(16, 185, 129, 0.7)" : "rgba(5, 150, 105, 0.7)",
-        borderColor: props.darkMode ? "rgba(16, 185, 129, 1)" : "rgba(5, 150, 105, 1)",
+        backgroundColor: props.darkMode ? "rgba(156, 163, 175, 0.7)" : "rgba(107, 114, 128, 0.7)",
+        borderColor: props.darkMode ? "rgba(156, 163, 175, 1)" : "rgba(107, 114, 128, 1)",
         borderWidth: 1,
         data: statsData.value.lastWeekFiles,
         borderRadius: 4,
@@ -328,7 +328,7 @@ const getSourceInfo = (source) => {
   const sourceMap = {
     provider: {
       label: t("admin.dashboard.sourceLabels.provider"),
-      color: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+      color: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300",
       description: t("admin.dashboard.sourceDescriptions.provider"),
     },
     local_fs: {
@@ -338,18 +338,18 @@ const getSourceInfo = (source) => {
     },
     vfs_nodes: {
       label: t("admin.dashboard.sourceLabels.vfsNodes"),
-      color: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
+      color: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300",
       description: t("admin.dashboard.sourceDescriptions.vfsNodes"),
     },
     fs_index: {
       label: t("admin.dashboard.sourceLabels.fsIndex"),
-      color: "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400",
+      color: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300",
       description: t("admin.dashboard.sourceDescriptions.fsIndex"),
     },
   };
   return sourceMap[source] || {
     label: source || t("admin.dashboard.sourceLabels.unknown"),
-    color: "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300",
+    color: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300",
     description: "",
   };
 };
@@ -766,7 +766,7 @@ useEventListener(window, "languageChanged", handleLanguageChange);
               {{ statsData.totalFiles }}
             </p>
           </div>
-          <div class="h-12 w-12 rounded-lg flex items-center justify-center" :class="darkMode ? 'bg-green-500/20 text-green-400' : 'bg-green-100 text-green-600'">
+          <div class="h-12 w-12 rounded-lg flex items-center justify-center" :class="darkMode ? 'bg-gray-500/20 text-gray-400' : 'bg-gray-100 text-gray-600'">
             <IconFolder class="h-6 w-6" />
           </div>
         </div>
@@ -783,7 +783,7 @@ useEventListener(window, "languageChanged", handleLanguageChange);
               {{ statsData.totalApiKeys }}
             </p>
           </div>
-          <div class="h-12 w-12 rounded-lg flex items-center justify-center" :class="darkMode ? 'bg-purple-500/20 text-purple-400' : 'bg-purple-100 text-purple-600'">
+          <div class="h-12 w-12 rounded-lg flex items-center justify-center" :class="darkMode ? 'bg-gray-500/20 text-gray-400' : 'bg-gray-100 text-gray-600'">
             <IconKey class="h-6 w-6" />
           </div>
         </div>
@@ -800,7 +800,7 @@ useEventListener(window, "languageChanged", handleLanguageChange);
               {{ statsData.totalStorageConfigs }}
             </p>
           </div>
-          <div class="h-12 w-12 rounded-lg flex items-center justify-center" :class="darkMode ? 'bg-orange-500/20 text-orange-400' : 'bg-orange-100 text-orange-600'">
+          <div class="h-12 w-12 rounded-lg flex items-center justify-center" :class="darkMode ? 'bg-gray-500/20 text-gray-400' : 'bg-gray-100 text-gray-600'">
             <IconCloud class="h-6 w-6" />
           </div>
         </div>
@@ -1172,7 +1172,7 @@ useEventListener(window, "languageChanged", handleLanguageChange);
         <div class="flex justify-between items-center">
           <div class="flex-1 cursor-pointer" @click="isCacheExpanded = !isCacheExpanded">
             <div class="flex items-center mb-2">
-              <div class="h-10 w-10 rounded-lg flex items-center justify-center mr-3" :class="darkMode ? 'bg-indigo-500/20 text-indigo-400' : 'bg-indigo-100 text-indigo-600'">
+              <div class="h-10 w-10 rounded-lg flex items-center justify-center mr-3" :class="darkMode ? 'bg-gray-500/20 text-gray-400' : 'bg-gray-100 text-gray-600'">
                 <IconChartBar class="h-5 w-5" />
               </div>
               <div>
@@ -1299,13 +1299,13 @@ useEventListener(window, "languageChanged", handleLanguageChange);
             </div>
           </div>
 
-          <div class="p-2 rounded-lg bg-opacity-10" :class="darkMode ? 'bg-green-500' : 'bg-green-100'">
+          <div class="p-2 rounded-lg bg-opacity-10" :class="darkMode ? 'bg-gray-500' : 'bg-gray-100'">
             <div class="flex items-center">
-              <div class="w-7 h-7 rounded-full flex items-center justify-center mr-2" :class="darkMode ? 'bg-green-500/20 text-green-400' : 'bg-green-100 text-green-600'">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center mr-2" :class="darkMode ? 'bg-gray-500/20 text-gray-400' : 'bg-gray-100 text-gray-600'">
                 <IconDocument class="h-3.5 w-3.5" />
               </div>
               <div>
-                <p class="text-xs font-medium" :class="darkMode ? 'text-green-200' : 'text-green-700'">
+                <p class="text-xs font-medium" :class="darkMode ? 'text-gray-400' : 'text-gray-600'">
                   {{ t("admin.dashboard.weeklyFiles") }}
                 </p>
                 <p class="text-lg font-semibold" :class="darkMode ? 'text-white' : 'text-gray-800'">
@@ -1315,13 +1315,13 @@ useEventListener(window, "languageChanged", handleLanguageChange);
             </div>
           </div>
 
-          <div class="p-2 rounded-lg bg-opacity-10" :class="darkMode ? 'bg-purple-500' : 'bg-purple-100'">
+          <div class="p-2 rounded-lg bg-opacity-10" :class="darkMode ? 'bg-gray-500' : 'bg-gray-100'">
             <div class="flex items-center">
-              <div class="w-7 h-7 rounded-full flex items-center justify-center mr-2" :class="darkMode ? 'bg-purple-500/20 text-purple-400' : 'bg-purple-100 text-purple-600'">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center mr-2" :class="darkMode ? 'bg-gray-500/20 text-gray-400' : 'bg-gray-100 text-gray-600'">
                 <IconChartBar class="h-3.5 w-3.5" />
               </div>
               <div>
-                <p class="text-xs font-medium" :class="darkMode ? 'text-purple-200' : 'text-purple-700'">
+                <p class="text-xs font-medium" :class="darkMode ? 'text-gray-400' : 'text-gray-600'">
                   {{ t("admin.dashboard.mostActiveDate") }}
                 </p>
                 <p class="text-lg font-semibold" :class="darkMode ? 'text-white' : 'text-gray-800'">
@@ -1331,13 +1331,13 @@ useEventListener(window, "languageChanged", handleLanguageChange);
             </div>
           </div>
 
-          <div class="p-2 rounded-lg bg-opacity-10" :class="darkMode ? 'bg-yellow-500' : 'bg-yellow-100'">
+          <div class="p-2 rounded-lg bg-opacity-10" :class="darkMode ? 'bg-gray-500' : 'bg-gray-100'">
             <div class="flex items-center">
-              <div class="w-7 h-7 rounded-full flex items-center justify-center mr-2" :class="darkMode ? 'bg-yellow-500/20 text-yellow-400' : 'bg-yellow-100 text-yellow-600'">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center mr-2" :class="darkMode ? 'bg-gray-500/20 text-gray-400' : 'bg-gray-100 text-gray-600'">
                 <IconChartBar class="h-3.5 w-3.5" />
               </div>
               <div>
-                <p class="text-xs font-medium" :class="darkMode ? 'text-yellow-200' : 'text-yellow-700'">
+                <p class="text-xs font-medium" :class="darkMode ? 'text-gray-400' : 'text-gray-600'">
                   {{ t("admin.dashboard.highestDailyActivity") }}
                 </p>
                 <p class="text-lg font-semibold" :class="darkMode ? 'text-white' : 'text-gray-800'">{{ weeklyMaxValues.maxValue }} {{ t("admin.dashboard.items") }}</p>
@@ -1359,7 +1359,7 @@ useEventListener(window, "languageChanged", handleLanguageChange);
       <!-- 版本信息 -->
       <div class="flex-1 p-3 rounded-lg shadow transition-shadow hover:shadow-md" :class="darkMode ? 'bg-gray-700' : 'bg-white'">
         <div class="flex items-center mb-2">
-          <div class="w-6 h-6 rounded-full flex items-center justify-center mr-2" :class="darkMode ? 'bg-purple-500/20 text-purple-400' : 'bg-purple-100 text-purple-600'">
+          <div class="w-6 h-6 rounded-full flex items-center justify-center mr-2" :class="darkMode ? 'bg-gray-500/20 text-gray-400' : 'bg-gray-100 text-gray-600'">
             <IconDocument class="h-3.5 w-3.5" />
           </div>
           <h3 class="text-sm font-medium" :class="darkMode ? 'text-gray-300' : 'text-gray-500'">
@@ -1389,7 +1389,7 @@ useEventListener(window, "languageChanged", handleLanguageChange);
       <!-- 数据库信息 -->
       <div class="flex-1 p-3 rounded-lg shadow transition-shadow hover:shadow-md" :class="darkMode ? 'bg-gray-700' : 'bg-white'">
         <div class="flex items-center mb-2">
-          <div class="w-6 h-6 rounded-full flex items-center justify-center mr-2" :class="darkMode ? 'bg-green-500/20 text-green-400' : 'bg-green-100 text-green-600'">
+          <div class="w-6 h-6 rounded-full flex items-center justify-center mr-2" :class="darkMode ? 'bg-gray-500/20 text-gray-400' : 'bg-gray-100 text-gray-600'">
             <IconCircleStack class="h-3.5 w-3.5" />
           </div>
           <h3 class="text-sm font-medium" :class="darkMode ? 'text-gray-300' : 'text-gray-500'">
@@ -1405,7 +1405,7 @@ useEventListener(window, "languageChanged", handleLanguageChange);
       <!-- 上次更新时间 -->
       <div class="flex-1 p-3 rounded-lg shadow transition-shadow hover:shadow-md" :class="darkMode ? 'bg-gray-700' : 'bg-white'">
         <div class="flex items-center mb-2">
-          <div class="w-6 h-6 rounded-full flex items-center justify-center mr-2" :class="darkMode ? 'bg-purple-500/20 text-purple-400' : 'bg-purple-100 text-purple-600'">
+          <div class="w-6 h-6 rounded-full flex items-center justify-center mr-2" :class="darkMode ? 'bg-gray-500/20 text-gray-400' : 'bg-gray-100 text-gray-600'">
             <IconClock class="h-3.5 w-3.5" />
           </div>
           <h3 class="text-sm font-medium" :class="darkMode ? 'text-gray-300' : 'text-gray-500'">
