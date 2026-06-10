@@ -86,6 +86,18 @@ body {
   --gray-950: 4 5 6;
 }
 
+/* Ensure select dropdown options are styled in dark mode */
+.dark select option,
+.dark option {
+  background-color: rgb(var(--gray-800)) !important;
+  color: rgb(var(--gray-100)) !important;
+}
+
+.dark select option:disabled,
+.dark option:disabled {
+  color: rgb(var(--gray-400)) !important;
+}
+
 /* 移动设备优化 */
 @media (max-width: 640px) {
   html {

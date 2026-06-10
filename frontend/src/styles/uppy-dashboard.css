@@ -1,4 +1,4 @@
-/* Uppy Dashboard共享样式 */
+/* Uppy Dashboard閸忓彉闊╅弽宄扮础 */
 
 .uppy-container {
   border-radius: 0.5rem;
@@ -24,16 +24,16 @@
   background: #eff6ff !important;
 }
 
-/* 暗色模式适配 */
+/* 閺嗘澹婂Ο鈥崇础闁倿鍘?*/
 .dark .uppy-Dashboard-inner {
   border-color: #4b5563 !important;
-  background: #374151 !important;
+  background: #1D1D1E !important;
   color: #f3f4f6 !important;
 }
 
 .dark .uppy-Dashboard-inner:hover {
   border-color: #3b82f6 !important;
-  background: #1f2937 !important;
+  background: #1D1D1E !important;
 }
 
 .dark .uppy-Dashboard-AddFiles {
@@ -45,7 +45,7 @@
   color: #f3f4f6 !important;
 }
 
-/* 文件项样式 */
+/* 閺傚洣娆㈡い瑙勭壉瀵?*/
 .uppy-Dashboard-file {
   border-radius: 0.5rem !important;
   border: 1px solid #e5e7eb !important;
@@ -69,14 +69,14 @@
   background: #6b7280 !important;
 }
 
-/* 进度条样式 */
+/* 鏉╂稑瀹抽弶鈩冪壉瀵?*/
 .uppy-ProgressBar {
   background: #3b82f6 !important;
   border-radius: 0.25rem !important;
   height: 0.25rem !important;
 }
 
-/* 状态栏样式 */
+/* 閻樿埖鈧焦鐖弽宄扮础 */
 .uppy-StatusBar {
   border-radius: 0.5rem !important;
   margin-top: 0.5rem !important;
@@ -90,18 +90,18 @@
   color: #f3f4f6 !important;
 }
 
-/* 隐藏品牌信息 */
+/* 闂呮劘妫岄崫浣哄娣団剝浼?*/
 .uppy-Dashboard-poweredBy {
   display: none !important;
 }
 
-/* URL导入插件输入框宽度优化 */
+/* URL鐎电厧鍙嗛幓鎺嶆鏉堟挸鍙嗗鍡楊啍鎼达缚绱崠?*/
 .uppy-Url-input {
   width: 360px !important;
   max-width: 360px !important;
 }
 
-/* 文件信息卡片宽度限制 */
+/* 閺傚洣娆㈡穱鈩冧紖閸楋紕澧栫€硅棄瀹抽梽鎰煑 */
 .uppy-Url > div[style*="background-color: rgb(240, 253, 244)"],
 .uppy-Url > div[style*="background-color: rgb(254, 242, 242)"] {
   width: fit-content !important;
@@ -110,7 +110,7 @@
   margin-right: auto !important;
 }
 
-/* 按钮容器居中 */
+/* 閹稿鎸崇€圭懓娅掔仦鍛厬 */
 .uppy-Url > div[style*="display: flex"] {
   justify-content: center !important;
   max-width: 360px !important;
@@ -118,19 +118,19 @@
   margin-right: auto !important;
 }
 
-/* 下载按钮固定宽度 */
+/* 娑撳娴囬幐澶愭尦閸ュ搫鐣剧€硅棄瀹?*/
 .uppy-Url-actionButton {
   flex: 0 0 auto !important;
   width: 130px !important;
 }
 
-/* 重新输入按钮固定宽度 */
+/* 闁插秵鏌婃潏鎾冲弳閹稿鎸抽崶鍝勭暰鐎硅棄瀹?*/
 .uppy-Url .uppy-c-btn:not(.uppy-Url-actionButton) {
   flex: 0 0 auto !important;
   width: 140px !important;
 }
 
-/* 暗色模式适配 - 成功信息卡片 */
+/* 閺嗘澹婂Ο鈥崇础闁倿鍘?- 閹存劕濮涙穱鈩冧紖閸楋紕澧?*/
 [data-uppy-theme=dark] .uppy-Url > div[style*="background-color: rgb(240, 253, 244)"] {
   background-color: #064e3b !important;
   border-color: #065f46 !important;
@@ -144,7 +144,7 @@
   color: #d1d5db !important;
 }
 
-/* 暗色模式适配 - 错误信息卡片 */
+/* 閺嗘澹婂Ο鈥崇础闁倿鍘?- 闁挎瑨顕ゆ穱鈩冧紖閸楋紕澧?*/
 [data-uppy-theme=dark] .uppy-Url > div[style*="background-color: rgb(254, 242, 242)"] {
   background-color: #7f1d1d !important;
   border-color: #991b1b !important;
@@ -154,7 +154,7 @@
   color: #fca5a5 !important;
 }
 
-/* 响应式调整 */
+/* 閸濆秴绨插蹇氱殶閺?*/
 @media (max-width: 768px) {
   .uppy-Dashboard-AddFiles {
     padding: 1.5rem 1rem !important;
@@ -164,4 +164,28 @@
     padding: 0.5rem 1rem !important;
     font-size: 0.875rem !important;
   }
+}
+
+/* Make Uppy Dashboard icons gray */
+.uppy-DashboardTab svg,
+.uppy-Dashboard-AddFiles-list svg {
+  filter: grayscale(100%) opacity(0.7) !important;
+}
+.uppy-DashboardTab-icon {
+  filter: grayscale(100%) opacity(0.7) !important;
+}
+
+
+
+
+/* Make Uppy AddFiles text colors weaker */
+.dark .uppy-Dashboard-AddFiles-title {
+  color: #9ca3af !important;
+}
+.dark .uppy-Dashboard-browse {
+  color: #9ca3af !important;
+  text-decoration: underline !important;
+}
+.dark .uppy-Dashboard-AddFiles-info {
+  color: #6b7280 !important;
 }

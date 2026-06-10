@@ -29,10 +29,10 @@ const STORAGE_TYPE_CONFIG = {
   },
   ONEDRIVE: {
     icon: IconStorageOneDrive,
-    lightColor: "text-sky-600",
-    darkColor: "text-sky-400",
-    lightBg: "bg-sky-100",
-    darkBg: "bg-sky-900/30",
+    lightColor: "text-blue-600",
+    darkColor: "text-blue-400",
+    lightBg: "bg-blue-100",
+    darkBg: "bg-blue-900/30",
   },
   GOOGLE_DRIVE: {
     icon: IconStorageGoogleDrive,
@@ -71,10 +71,10 @@ const STORAGE_TYPE_CONFIG = {
   },
   TELEGRAM: {
     icon: IconStorageTelegram,
-    lightColor: "text-sky-500",
-    darkColor: "text-sky-400",
-    lightBg: "bg-sky-100",
-    darkBg: "bg-sky-900/30",
+    lightColor: "text-blue-500",
+    darkColor: "text-blue-400",
+    lightBg: "bg-blue-100",
+    darkBg: "bg-blue-900/30",
   },
   DISCORD: {
     icon: IconStorageDiscord,

@@ -8,6 +8,7 @@ import { usePolicy } from "../../security/policies/policies.js";
 import { findUploadSessionById, normalizeUploadSessionUserId, updateUploadSessionById } from "../../utils/uploadSessions.js";
 import { validateFsItemName } from "../../storage/fs/utils/FsInputValidator.js";
 import { StorageQuotaGuard } from "../../storage/usage/StorageQuotaGuard.js";
+import { StorageUsageService } from "../../storage/usage/StorageUsageService.js";
 import { toAbsoluteUrlIfRelative } from "../../constants/proxy.js";
 
 /**
@@ -163,6 +164,15 @@ export const registerMultipartRoutes = (router, helpers) => {
   // == FS 分片上传（multipart）：初始化 / 完成 / 中止（通用生命周期接口） ==
   // =====================================================================
 
+  // 上传完成后异步刷新用量快照（fire-and-forget，不阻塞响应）
+  const refreshSnapshotAsync = (db, encryptionSecret, repositoryFactory, storageConfigId, env) => {
+    if (!storageConfigId) return;
+    const usage = new StorageUsageService(db, encryptionSecret, repositoryFactory, { env: env || {} });
+    usage.computeAndPersistSnapshot(String(storageConfigId)).catch(() => {
+      // 静默失败，快照下次刷新时会更新
+    });
+  };
+
   router.post("/api/fs/multipart/init", parseJsonBody, usePolicy("fs.upload", { pathResolver: jsonPathResolver() }), async (c) => {
     const { db, encryptionSecret, repositoryFactory, userIdOrInfo, userType } = requireUserContext(c);
     const body = c.get("jsonBody");
@@ -247,6 +257,9 @@ export const registerMultipartRoutes = (router, helpers) => {
     });
     const safeParts = Array.isArray(parts) ? parts : [];
     const result = await fileSystem.completeFrontendMultipartUpload(path, uploadId, safeParts, fileName, fileSize, userIdOrInfo, userType);
+
+    // 上传成功后异步刷新用量快照，确保下次配额检查使用最新值
+    refreshSnapshotAsync(db, encryptionSecret, repositoryFactory, sessionRow?.storage_config_id, c.env);
 
     return jsonOk(c, { ...result, publicUrl: result.publicUrl || null }, "前端分片上传完成");
   });
@@ -564,6 +577,10 @@ export const registerMultipartRoutes = (router, helpers) => {
       contentType,
       sha256,
     });
+
+    // 上传成功后异步刷新用量快照，确保下次配额检查使用最新值
+    const { mount } = await mountManager.getDriverByPath(targetPath, userIdOrInfo, userType).catch(() => ({ mount: null }));
+    refreshSnapshotAsync(db, encryptionSecret, repositoryFactory, mount?.storage_config_id || body.storageConfigId, c.env);
 
     return jsonOk(c, { ...result, publicUrl: result.publicUrl || null, fileName, targetPath, fileSize }, "文件上传完成");
   });

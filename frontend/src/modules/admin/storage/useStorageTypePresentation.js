@@ -9,20 +9,20 @@ import { useStorageConfigsStore } from "@/stores/storageConfigsStore.js";
 
 const BADGE_THEME_CLASS = {
   s3: {
-    light: "bg-blue-100 text-blue-800",
-    dark: "bg-blue-700 text-blue-100",
+    light: "bg-gray-100 text-gray-800",
+    dark: "bg-gray-700 text-gray-100",
   },
   webdav: {
     light: "bg-green-100 text-green-800",
     dark: "bg-green-700 text-green-100",
   },
   onedrive: {
-    light: "bg-sky-100 text-sky-800",
-    dark: "bg-sky-700 text-sky-100",
+    light: "bg-gray-100 text-gray-800",
+    dark: "bg-gray-700 text-gray-100",
   },
   googledrive: {
-    light: "bg-red-100 text-red-800",
-    dark: "bg-red-700 text-red-100",
+    light: "bg-gray-100 text-gray-800",
+    dark: "bg-gray-700 text-gray-100",
   },
   github: {
     light: "bg-gray-900 text-white",
@@ -33,12 +33,12 @@ const BADGE_THEME_CLASS = {
     dark: "bg-gray-700 text-gray-100",
   },
   telegram: {
-    light: "bg-sky-100 text-sky-700",
-    dark: "bg-sky-800 text-sky-100",
+    light: "bg-gray-100 text-gray-800",
+    dark: "bg-gray-700 text-gray-100",
   },
   discord: {
-    light: "bg-indigo-100 text-indigo-800",
-    dark: "bg-indigo-700 text-indigo-100",
+    light: "bg-gray-100 text-gray-800",
+    dark: "bg-gray-700 text-gray-100",
   },
   huggingface: {
     light: "bg-yellow-100 text-yellow-800",

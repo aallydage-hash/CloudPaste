@@ -128,6 +128,16 @@
                 <IconLink size="sm" aria-hidden="true" />
               </button>
 
+              <!-- 复制 Markdown 链接按钮 -->
+              <button
+                @click.stop="copyMarkdownLink(file)"
+                class="p-1.5 rounded-md transition-colors relative"
+                :class="darkMode ? 'hover:bg-gray-700 text-gray-400 hover:text-white' : 'hover:bg-gray-100 text-gray-500 hover:text-gray-700'"
+                :title="t('markdown.copyAsMarkdown')"
+              >
+                <IconCode size="sm" aria-hidden="true" />
+              </button>
+
               <!-- 二维码按钮 -->
               <button
                 @click.stop="showQRCode(file)"
@@ -228,6 +238,15 @@
                 :class="darkMode ? 'bg-gray-700 hover:bg-gray-600 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-800'"
               >
                 {{ t("file.copyDirectLink") }}
+              </button>
+
+              <!-- 复制 Markdown 链接按钮 -->
+              <button
+                @click.stop="copyMarkdownLink(file)"
+                class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium rounded transition-colors"
+                :class="darkMode ? 'bg-gray-700 hover:bg-gray-600 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-800'"
+              >
+                Markdown
               </button>
 
               <!-- 二维码按钮 -->
@@ -335,7 +354,7 @@ import { getRemainingViews as getRemainingViewsUtil, formatFileSize } from "@/ut
 import { getFileIcon } from "@/utils/fileTypeIcons.js";
 import { generateQRCode as createQRCodeImage } from "@/utils/qrcodeUtils.js";
 import { useFileshareService } from "@/modules/fileshare/fileshareService.js";
-import { IconCheckbox, IconClose, IconCopy, IconDelete, IconDownload, IconError, IconExternalLink, IconFolderPlus, IconLink, IconQrCode, IconRefresh } from "@/components/icons";
+import { IconCheckbox, IconClose, IconCode, IconCopy, IconDelete, IconDownload, IconError, IconExternalLink, IconFolderPlus, IconLink, IconQrCode, IconRefresh } from "@/components/icons";
 import { createLogger } from "@/utils/logger.js";
 
 const props = defineProps({
@@ -527,6 +546,43 @@ const copyPermanentLink = async (file) => {
         copiedPermanentFiles.value[file.id] = false;
       }, 2000);
       showMessage("success", t("file.directLinkCopied"));
+    } else {
+      throw new Error(t("file.messages.copyFailed"));
+    }
+  } catch (error) {
+    log.error(t("file.copyPermanentLinkFailed") + ":", error);
+    showMessage("error", `${t("file.copyPermanentLinkFailed")}: ${error.message || t("file.messages.unknownError")}`);
+  }
+};
+
+const copyMarkdownLink = async (file) => {
+  if (!file || !file.slug) {
+    showMessage("error", t("file.noValidLink"));
+    return;
+  }
+
+  try {
+    let detail = file;
+    if (!detail.downloadUrl) {
+      if (!file.id) {
+        throw new Error(t("file.cannotGetProxyLink"));
+      }
+      detail = await fileshareService.fetchById(file.id, { includeLinks: true });
+    }
+
+    const permanentDownloadUrl = fileshareService.getPermanentDownloadUrl(detail);
+    if (!permanentDownloadUrl) {
+      throw new Error(t("file.cannotGetProxyLink"));
+    }
+
+    const isImg = file.mimetype?.startsWith("image/") || /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(file.filename);
+    const markdownText = isImg
+      ? `![${file.filename}](${permanentDownloadUrl})`
+      : `[${file.filename}](${permanentDownloadUrl})`;
+
+    const success = await copyToClipboard(markdownText);
+    if (success) {
+      showMessage("success", t("markdown.markdownCopied"));
     } else {
       throw new Error(t("file.messages.copyFailed"));
     }

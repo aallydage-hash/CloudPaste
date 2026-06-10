@@ -921,7 +921,7 @@ onMounted(async () => {
                             type="checkbox"
                             :id="fieldName"
                             v-model="formData[fieldName]"
-                            class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                            class="h-4 w-4 rounded border-gray-300 text-gray-600 focus:ring-gray-500"
                             :class="darkMode ? 'bg-gray-700 border-gray-600' : ''"
                           />
                           <label :for="fieldName" class="ml-2 text-sm" :class="darkMode ? 'text-gray-200' : 'text-gray-700'">
@@ -949,7 +949,7 @@ onMounted(async () => {
                             :id="fieldName"
                             :checked="formData[fieldName] === getEnumToggleValues(fieldName).onValue"
                             @change="handleEnumToggleChange(fieldName, $event.target.checked)"
-                            class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                            class="h-4 w-4 rounded border-gray-300 text-gray-600 focus:ring-gray-500"
                             :class="darkMode ? 'bg-gray-700 border-gray-600' : ''"
                           />
                           <label :for="fieldName" class="ml-2 text-sm" :class="darkMode ? 'text-gray-200' : 'text-gray-700'">
@@ -1055,7 +1055,7 @@ onMounted(async () => {
                           type="checkbox"
                           :id="row.field"
                           v-model="formData[row.field]"
-                          class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                          class="h-4 w-4 rounded border-gray-300 text-gray-600 focus:ring-gray-500"
                           :class="darkMode ? 'bg-gray-700 border-gray-600' : ''"
                         />
                         <label :for="row.field" class="ml-2 text-sm" :class="darkMode ? 'text-gray-200' : 'text-gray-700'">
@@ -1083,7 +1083,7 @@ onMounted(async () => {
                           :id="row.field"
                           :checked="formData[row.field] === getEnumToggleValues(row.field).onValue"
                           @change="handleEnumToggleChange(row.field, $event.target.checked)"
-                          class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                          class="h-4 w-4 rounded border-gray-300 text-gray-600 focus:ring-gray-500"
                           :class="darkMode ? 'bg-gray-700 border-gray-600' : ''"
                         />
                         <label :for="row.field" class="ml-2 text-sm" :class="darkMode ? 'text-gray-200' : 'text-gray-700'">
@@ -1213,7 +1213,7 @@ onMounted(async () => {
                     type="checkbox"
                     id="is_public"
                     v-model="formData.is_public"
-                    class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                    class="h-4 w-4 rounded border-gray-300 text-gray-600 focus:ring-gray-500"
                     :class="darkMode ? 'bg-gray-700 border-gray-600' : ''"
                   />
                   <label for="is_public" class="ml-2 text-sm" :class="darkMode ? 'text-gray-200' : 'text-gray-700'">允许API密钥用户使用</label>
@@ -1240,7 +1240,7 @@ onMounted(async () => {
         <button
           @click="submitForm"
           :disabled="!formValid || loading"
-          class="w-full sm:w-auto flex justify-center items-center px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 bg-primary-500 hover:bg-primary-600 text-white"
+          class="w-full sm:w-auto flex justify-center items-center px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 bg-gray-600 hover:bg-gray-700 text-white"
           :class="{ 'opacity-50 cursor-not-allowed': !formValid || loading }"
         >
           <IconRefresh v-if="loading" size="sm" class="animate-spin -ml-1 mr-2 text-white" />

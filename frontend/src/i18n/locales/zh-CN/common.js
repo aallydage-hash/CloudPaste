@@ -125,9 +125,9 @@ export default {
   },
   nav: {
     home: "文本编辑",
-    upload: "文件上传",
-    mountExplorer: "挂载浏览",
-    admin: "管理面板",
+    upload: "上传",
+    mountExplorer: "浏览",
+    admin: "管理",
     menu: "主菜单",
   },
   theme: {

@@ -11,6 +11,7 @@ import { useConfirmDialog, createConfirmFn } from "@/composables/core/useConfirm
 import { useStorageTypePresentation } from "@/modules/admin/storage/useStorageTypePresentation.js";
 import { useStorageTypeIcon } from "@/composables/core/useStorageTypeIcon.js";
 import { IconArchive, IconCheck, IconCheckCircle, IconChevronRight, IconClose, IconCloud, IconDelete, IconError, IconExclamationSolid, IconFolderPlus, IconLink, IconRefresh, IconRename, IconShieldCheck, IconXCircle } from "@/components/icons";
+import { api } from "@/api";
 
 const { isDarkMode: darkMode } = useThemeMode();
 
@@ -234,10 +235,58 @@ const formatDate = (isoDate) => {
   return formatDateTimeWithSeconds(isoDate);
 };
 
+// ===== 存储用量相关 =====
+const storageUsageMap = ref({});
+const isLoadingUsage = ref(false);
+
+const formatBytes = (bytes) => {
+  if (bytes == null || isNaN(bytes)) return '—';
+  if (bytes === 0) return '0 B';
+  const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+  const i = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
+  return (bytes / Math.pow(1024, i)).toFixed(2).replace(/\.00$/, '') + ' ' + units[i];
+};
+
+const fetchStorageUsage = async () => {
+  try {
+    const resp = await api.admin.getStorageUsageReport();
+    const data = resp?.data ?? resp;
+    const storages = Array.isArray(data?.storages) ? data.storages : [];
+    const newMap = {};
+    for (const s of storages) {
+      newMap[s.id] = {
+        usedBytes: s.computedUsage?.usedBytes ?? null,
+        limitBytes: s.configuredLimitBytes ?? null,
+        percentUsed: s.limitStatus?.percentUsed ?? null,
+        exceeded: s.limitStatus?.exceeded ?? false,
+      };
+    }
+    storageUsageMap.value = newMap;
+  } catch (e) {
+    // 静默处理，不影响主功能
+  }
+};
+
+const refreshStorageUsage = async () => {
+  if (isLoadingUsage.value) return;
+  isLoadingUsage.value = true;
+  try {
+    await api.admin.refreshStorageUsageSnapshots({ maxItems: 50 });
+    await fetchStorageUsage();
+  } catch (e) {
+    // 静默处理
+  } finally {
+    isLoadingUsage.value = false;
+  }
+};
+
+const getUsageInfo = (configId) => storageUsageMap.value[configId] || null;
+
 // 组件加载时获取存储类型元数据和配置列表
 onMounted(async () => {
   await ensureLoaded();
   await loadStorageConfigs();
+  fetchStorageUsage();
 });
 </script>
 
@@ -246,7 +295,7 @@ onMounted(async () => {
     <h2 class="text-lg sm:text-xl font-medium mb-4" :class="darkMode ? 'text-gray-100' : 'text-gray-900'">存储管理</h2>
 
     <div class="flex flex-wrap gap-3 mb-5 items-center">
-      <button @click="addNewConfig" class="px-3 py-2 rounded-md flex items-center space-x-1 bg-primary-500 hover:bg-primary-600 text-white font-medium transition text-sm">
+      <button @click="addNewConfig" class="px-3 py-2 rounded-md flex items-center space-x-1 bg-gray-600 hover:bg-gray-700 text-white font-medium transition text-sm">
         <IconFolderPlus class="h-4 w-4" />
         <span>添加新配置</span>
       </button>
@@ -299,7 +348,7 @@ onMounted(async () => {
     <div class="flex-1 flex flex-col">
       <!-- 加载状态 -->
       <div v-if="loading" class="flex justify-center items-center h-40">
-        <IconRefresh class="animate-spin h-8 w-8 text-primary-500" />
+        <IconRefresh class="animate-spin h-8 w-8 text-gray-500" />
       </div>
 
       <!-- 存储配置列表 -->
@@ -313,7 +362,7 @@ onMounted(async () => {
               class="rounded-lg shadow-md overflow-hidden transition-colors duration-200 border relative"
               :class="[
                 darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200',
-                config.is_default ? (darkMode ? 'ring-3 ring-primary-500 border-primary-500 shadow-lg' : 'ring-3 ring-primary-500 border-primary-500 shadow-lg') : '',
+                config.is_default ? (darkMode ? 'ring-3 ring-gray-600 border-gray-600 shadow-lg' : 'ring-3 ring-gray-500 border-gray-500 shadow-lg') : '',
               ]"
             >
               <div class="px-2 py-2 sm:px-3 sm:py-2.5 flex flex-wrap justify-between items-center gap-2 border-b" :class="darkMode ? 'bg-gray-700 border-gray-600' : 'bg-gray-50 border-gray-200'">
@@ -328,14 +377,14 @@ onMounted(async () => {
                   <span
                     v-if="config.is_default"
                     class="text-xs px-1.5 sm:px-2 py-0.5 rounded-full font-medium flex-shrink-0"
-                    :class="darkMode ? 'bg-primary-600 text-white' : 'bg-primary-500 text-white'"
+                    :class="darkMode ? 'bg-gray-600 text-white' : 'bg-gray-500 text-white'"
                   >
                     默认
                   </span>
                   <span
                     v-if="config.url_proxy"
                     class="text-xs px-1.5 sm:px-2 py-0.5 rounded-full font-medium flex items-center gap-0.5 sm:gap-1 flex-shrink-0"
-                    :class="darkMode ? 'bg-blue-600/20 text-blue-300 border border-blue-500/30' : 'bg-blue-100 text-blue-700 border border-blue-200'"
+                    :class="darkMode ? 'bg-gray-600/20 text-gray-300 border border-gray-500/30' : 'bg-gray-100 text-gray-700 border border-gray-200'"
                     :title="`代理URL: ${config.url_proxy}`"
                   >
                     <IconLink class="h-3 w-3" />
@@ -346,7 +395,7 @@ onMounted(async () => {
                   <span
                     v-if="config.provider_type"
                     class="text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full font-medium whitespace-nowrap"
-                    :class="darkMode ? 'bg-primary-900/40 text-primary-200' : 'bg-primary-100 text-primary-800'"
+                    :class="darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-200 text-gray-800'"
                   >
                     {{ config.provider_type }}
                   </span>
@@ -487,7 +536,7 @@ onMounted(async () => {
                     @click="handleSetDefaultConfig(config.id)"
                     :disabled="isConfigSettingDefault(config.id)"
                     class="flex items-center px-3 py-1.5 rounded text-sm font-medium transition disabled:opacity-50 disabled:cursor-not-allowed"
-                    :class="darkMode ? 'bg-primary-600 hover:bg-primary-700 text-white' : 'bg-primary-100 hover:bg-primary-200 text-primary-800'"
+                    :class="darkMode ? 'bg-gray-600 hover:bg-gray-700 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-700'"
                   >
                     <IconRefresh v-if="isConfigSettingDefault(config.id)" class="animate-spin h-4 w-4 mr-1.5" />
                     <IconCheck v-else class="h-4 w-4 mr-1.5" />
@@ -501,8 +550,8 @@ onMounted(async () => {
                       testResults[config.id]?.loading
                         ? 'opacity-50 cursor-wait'
                         : darkMode
-                        ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                        : 'bg-blue-100 hover:bg-blue-200 text-blue-800'
+                        ? 'bg-gray-600 hover:bg-gray-700 text-white'
+                        : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
                     "
                     :disabled="testResults[config.id]?.loading"
                   >
@@ -529,7 +578,7 @@ onMounted(async () => {
                     @click="handleDeleteConfig(config.id)"
                     :disabled="isConfigDeleting(config.id)"
                     class="flex items-center px-3 py-1.5 rounded text-sm font-medium transition disabled:opacity-50 disabled:cursor-not-allowed"
-                    :class="darkMode ? 'bg-red-600 hover:bg-red-700 text-white' : 'bg-red-100 hover:bg-red-200 text-red-800'"
+                    :class="darkMode ? 'bg-gray-600 hover:bg-gray-700 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-700'"
                   >
                     <IconRefresh v-if="isConfigDeleting(config.id)" class="animate-spin h-4 w-4 mr-1.5" />
                     <IconDelete v-else class="h-4 w-4 mr-1.5" />
@@ -568,7 +617,7 @@ onMounted(async () => {
         <IconCloud class="mx-auto h-16 w-16 mb-4 text-gray-400" />
         <h3 class="text-lg font-medium mb-2" :class="darkMode ? 'text-gray-200' : 'text-gray-700'">尚未配置任何存储</h3>
         <p class="mb-5 text-sm max-w-md">添加您的第一个存储配置，支持多种对象存储或 WebDAV 服务。</p>
-        <button @click="addNewConfig" class="px-4 py-2 rounded-md bg-primary-500 hover:bg-primary-600 text-white font-medium transition inline-flex items-center">
+        <button @click="addNewConfig" class="px-4 py-2 rounded-md bg-gray-600 hover:bg-gray-700 text-white font-medium transition inline-flex items-center">
           <IconFolderPlus class="h-5 w-5 mr-1.5" />
           添加配置
         </button>

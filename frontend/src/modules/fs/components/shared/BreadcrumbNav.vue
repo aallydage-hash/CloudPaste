@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-2 sm:gap-0" :aria-label="$t('breadcrumb.navigation')">
+  <nav class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0" :aria-label="$t('breadcrumb.navigation')">
     <!-- 左侧面包屑 -->
     <ol class="flex flex-wrap items-center gap-1">
       <li class="flex items-center">

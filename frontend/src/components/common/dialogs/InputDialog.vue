@@ -23,7 +23,7 @@
           ref="inputRef"
           v-model="inputValue"
           :type="inputType"
-          class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+          class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
           :class="[darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300', hasError ? 'border-red-500 focus:ring-red-500' : '']"
           :placeholder="placeholder"
           :disabled="loading"
@@ -86,7 +86,7 @@
             ref="inputRef"
             v-model="inputValue"
             :type="showPasswordValue ? 'text' : inputType"
-            class="w-full px-4 py-2.5 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors"
+            class="w-full px-4 py-2.5 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors"
             :class="[
               darkMode ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-500' : 'bg-white border-gray-300 placeholder-gray-400',
               hasError ? 'border-red-500 focus:ring-red-500' : '',
@@ -266,13 +266,13 @@ const confirmButtonClass = computed(() => {
 
   switch (props.confirmType) {
     case "danger":
-      return `${baseClass} ${props.loading || !canConfirm.value ? "bg-red-500" : "bg-red-600 hover:bg-red-700"} ${disabledClass}`;
+      return `${baseClass} ${props.loading || !canConfirm.value ? "bg-gray-500" : "bg-gray-600 hover:bg-gray-700"} ${disabledClass}`;
     case "warning":
-      return `${baseClass} ${props.loading || !canConfirm.value ? "bg-yellow-500" : "bg-yellow-600 hover:bg-yellow-700"} ${disabledClass}`;
+      return `${baseClass} ${props.loading || !canConfirm.value ? "bg-gray-500" : "bg-gray-600 hover:bg-gray-700"} ${disabledClass}`;
     case "primary":
     default:
       return `${baseClass} ${
-        props.loading || !canConfirm.value ? "bg-primary-500" : props.darkMode ? "bg-primary-600 hover:bg-primary-700" : "bg-primary-500 hover:bg-primary-600"
+        props.loading || !canConfirm.value ? "bg-gray-500" : props.darkMode ? "bg-gray-600 hover:bg-gray-700" : "bg-gray-600 hover:bg-gray-700"
       } ${disabledClass}`;
   }
 });

@@ -106,7 +106,7 @@
                   class="flex-shrink-0"
                   :class="[
                     isCollapsed ? 'mx-auto' : 'mr-3',
-                    $route.name === item.routeName ? 'text-primary-500' : darkMode ? 'text-gray-400 group-hover:text-gray-300' : 'text-gray-400 group-hover:text-gray-500',
+                    $route.name === item.routeName ? (darkMode ? 'text-white' : 'text-gray-900') : darkMode ? 'text-gray-400 group-hover:text-gray-300' : 'text-gray-400 group-hover:text-gray-500',
                   ]"
                   aria-hidden="true"
                 />
@@ -219,7 +219,7 @@
                         class="flex-shrink-0"
                         :class="[
                           isCollapsed ? 'mx-auto' : 'mr-3',
-                          $route.name === child.routeName ? 'text-primary-500' : darkMode ? 'text-gray-500 group-hover:text-gray-400' : 'text-gray-400 group-hover:text-gray-500',
+                          $route.name === child.routeName ? (darkMode ? 'text-white' : 'text-gray-900') : darkMode ? 'text-gray-500 group-hover:text-gray-400' : 'text-gray-400 group-hover:text-gray-500',
                         ]"
                         aria-hidden="true"
                       />
@@ -274,21 +274,7 @@
                 </transition>
               </a>
 
-              <!-- 文档链接 -->
-              <div class="flex justify-center mt-2">
-                <a
-                  :href="DOC_URL"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  :class="[
-                    darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-400 hover:text-gray-500',
-                    'inline-flex items-center justify-center p-2 rounded-md transition-colors duration-200',
-                ]"
-                title="Document"
-              >
-                  <IconBookOpen class="h-7 w-7" aria-hidden="true" />
-                </a>
-              </div>
+
             </div>
           </nav>
           <div class="h-6"></div>
@@ -438,22 +424,7 @@
                   {{ logoutText }}
                 </a>
 
-                <!-- 文档链接 -->
-                <div class="flex justify-center mt-2">
-                  <a
-                    :href="DOC_URL"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    :class="[
-                      darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-400 hover:text-gray-500',
-                      'inline-flex items-center justify-center p-2 rounded-md transition-colors duration-200',
-                    ]"
-                    title="Document"
-                    @click="$emit('close-mobile-sidebar')"
-                  >
-                    <IconBookOpen class="h-7 w-7" aria-hidden="true" />
-                  </a>
-                </div>
+
               </div>
             </nav>
             <div class="h-6"></div>

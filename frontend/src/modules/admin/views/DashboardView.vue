@@ -168,16 +168,16 @@ const chartData = computed(() => {
     datasets: [
       {
         label: t("admin.dashboard.totalPastes"),
-        backgroundColor: props.darkMode ? "rgba(59, 130, 246, 0.7)" : "rgba(37, 99, 235, 0.7)",
-        borderColor: props.darkMode ? "rgba(59, 130, 246, 1)" : "rgba(37, 99, 235, 1)",
+        backgroundColor: darkMode.value ? "rgba(59, 130, 246, 0.7)" : "rgba(37, 99, 235, 0.7)",
+        borderColor: darkMode.value ? "rgba(59, 130, 246, 1)" : "rgba(37, 99, 235, 1)",
         borderWidth: 1,
         data: statsData.value.lastWeekPastes,
         borderRadius: 4,
       },
       {
         label: t("admin.dashboard.totalFiles"),
-        backgroundColor: props.darkMode ? "rgba(156, 163, 175, 0.7)" : "rgba(107, 114, 128, 0.7)",
-        borderColor: props.darkMode ? "rgba(156, 163, 175, 1)" : "rgba(107, 114, 128, 1)",
+        backgroundColor: darkMode.value ? "rgba(156, 163, 175, 0.7)" : "rgba(107, 114, 128, 0.7)",
+        borderColor: darkMode.value ? "rgba(156, 163, 175, 1)" : "rgba(107, 114, 128, 1)",
         borderWidth: 1,
         data: statsData.value.lastWeekFiles,
         borderRadius: 4,
@@ -198,29 +198,29 @@ const chartOptions = computed(() => {
     scales: {
       x: {
         grid: {
-          color: props.darkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
+          color: darkMode.value ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
         },
         ticks: {
-          color: props.darkMode ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)",
+          color: darkMode.value ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)",
         },
       },
       y: {
         beginAtZero: true,
         grid: {
-          color: props.darkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
+          color: darkMode.value ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
         },
         ticks: {
           precision: 0,
-          color: props.darkMode ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)",
+          color: darkMode.value ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)",
         },
       },
     },
     plugins: {
       tooltip: {
-        backgroundColor: props.darkMode ? "rgba(17, 24, 39, 0.9)" : "rgba(255, 255, 255, 0.9)",
-        titleColor: props.darkMode ? "rgba(255, 255, 255, 0.9)" : "rgba(0, 0, 0, 0.9)",
-        bodyColor: props.darkMode ? "rgba(255, 255, 255, 0.9)" : "rgba(0, 0, 0, 0.9)",
-        borderColor: props.darkMode ? "rgba(55, 65, 81, 1)" : "rgba(229, 231, 235, 1)",
+        backgroundColor: darkMode.value ? "rgba(17, 24, 39, 0.9)" : "rgba(255, 255, 255, 0.9)",
+        titleColor: darkMode.value ? "rgba(255, 255, 255, 0.9)" : "rgba(0, 0, 0, 0.9)",
+        bodyColor: darkMode.value ? "rgba(255, 255, 255, 0.9)" : "rgba(0, 0, 0, 0.9)",
+        borderColor: darkMode.value ? "rgba(55, 65, 81, 1)" : "rgba(229, 231, 235, 1)",
         borderWidth: 1,
         padding: 10,
         boxPadding: 5,
@@ -244,7 +244,7 @@ const chartOptions = computed(() => {
       },
       legend: {
         labels: {
-          color: props.darkMode ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)",
+          color: darkMode.value ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)",
           boxWidth: 12,
           padding: 15,
         },
@@ -666,7 +666,7 @@ const fetchDashboardStats = async () => {
 
 // 监听暗色模式变化
 watch(
-  () => props.darkMode,
+  () => darkMode.value,
   () => {
     // 当暗色模式变化时，通过重新计算chartData和chartOptions来更新图表
     chartData.value; // 触发重新计算

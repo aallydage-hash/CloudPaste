@@ -55,11 +55,11 @@
       <div class="form-group">
         <label class="form-label" :class="darkMode ? 'text-gray-300' : 'text-gray-700'">{{ $t("markdown.form.expiryTime") }}</label>
         <select class="form-input" :class="getInputClasses()" v-model="formData.expiry_time" :disabled="!hasPermission">
-          <option value="1">1 {{ $t("markdown.form.expiryHour") }}</option>
-          <option value="24">1 {{ $t("markdown.form.expiryDay") }}</option>
-          <option value="168">7 {{ $t("markdown.form.expiryDay") }}</option>
-          <option value="720">30 {{ $t("markdown.form.expiryDay") }}</option>
-          <option value="0">{{ $t("markdown.form.expiryNever") }}</option>
+          <option value="1" :class="darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'">1 {{ $t("markdown.form.expiryHour") }}</option>
+          <option value="24" :class="darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'">1 {{ $t("markdown.form.expiryDay") }}</option>
+          <option value="168" :class="darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'">7 {{ $t("markdown.form.expiryDay") }}</option>
+          <option value="720" :class="darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'">30 {{ $t("markdown.form.expiryDay") }}</option>
+          <option value="0" :class="darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'">{{ $t("markdown.form.expiryNever") }}</option>
         </select>
       </div>
 

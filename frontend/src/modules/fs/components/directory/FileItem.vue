@@ -22,7 +22,7 @@
     </div>
 
     <!-- 文件/文件夹图标 -->
-    <div class="file-item__icon">
+    <div class="file-item__icon grayscale">
       <span v-html="fileIcon"></span>
     </div>
 
@@ -86,7 +86,7 @@
         <button
           v-if="!item.isDirectory"
           @click.stop="$emit('download', item)"
-          class="file-item__action-btn w-8 h-8 rounded-full flex items-center justify-center transition-all bg-transparent text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transform hover:scale-110"
+          class="file-item__action-btn w-8 h-8 rounded-full flex items-center justify-center transition-all bg-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 transform hover:scale-110"
           :title="t('mount.fileItem.download')"
         >
           <IconDownload class="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
@@ -96,7 +96,7 @@
         <button
           v-if="!item.isDirectory"
           @click.stop="$emit('getLink', item)"
-          class="file-item__action-btn w-8 h-8 rounded-full flex items-center justify-center transition-all bg-transparent text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300 transform hover:scale-110"
+          class="file-item__action-btn w-8 h-8 rounded-full flex items-center justify-center transition-all bg-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 transform hover:scale-110"
           :title="t('mount.fileItem.getLink')"
         >
           <IconLink class="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
@@ -106,7 +106,7 @@
         <button
           v-if="!item.isDirectory"
           @click.stop="$emit('rename', item)"
-          class="file-item__action-btn w-8 h-8 rounded-full flex items-center justify-center transition-all bg-transparent text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300 transform hover:scale-110"
+          class="file-item__action-btn w-8 h-8 rounded-full flex items-center justify-center transition-all bg-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 transform hover:scale-110"
           :title="t('mount.fileItem.rename')"
         >
           <IconRename class="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
@@ -115,7 +115,7 @@
         <!-- 删除按钮 -->
         <button
           @click.stop="$emit('delete', item)"
-          class="file-item__action-btn w-8 h-8 rounded-full flex items-center justify-center transition-all bg-transparent text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transform hover:scale-110"
+          class="file-item__action-btn w-8 h-8 rounded-full flex items-center justify-center transition-all bg-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 transform hover:scale-110"
           :title="t('mount.fileItem.delete')"
         >
           <IconDelete class="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />

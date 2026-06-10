@@ -6,13 +6,7 @@
       <span class="text-sm font-medium" :class="darkMode ? 'text-gray-300' : 'text-gray-700'">
         {{ title }}
       </span>
-      <span
-        class="text-xs px-2 py-1 rounded-full cursor-help"
-        :class="currentModeClass"
-        :title="currentModeTooltip"
-      >
-        {{ currentModeLabel }}
-      </span>
+      
     </div>
 
     <!-- 模式选项 -->
@@ -142,3 +136,4 @@ const currentModeClass = computed(() => {
   }
 });
 </script>
+

@@ -169,7 +169,7 @@ const handlePageSizeChange = (event) => {
           <select
             :value="pagination.limit"
             @change="handlePageSizeChange"
-            class="px-2 py-1 text-xs md:text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+            class="px-2 py-1 text-xs md:text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
           >
             <option v-for="size in pageSizeOptions" :key="size" :value="size">
               {{ size }}
@@ -220,7 +220,7 @@ const handlePageSizeChange = (event) => {
               :class="[
                 'relative inline-flex items-center px-2 py-1 md:px-4 md:py-2 border text-xs md:text-sm font-medium',
                 pageNum === currentPage
-                  ? 'z-10 bg-primary-50 dark:bg-primary-900 border-primary-500 dark:border-primary-500 text-primary-600 dark:text-primary-200'
+                  ? 'z-10 bg-gray-100 dark:bg-gray-700 border-gray-500 dark:border-gray-500 text-gray-800 dark:text-gray-200'
                   : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700',
               ]"
             >

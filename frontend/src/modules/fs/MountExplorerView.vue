@@ -1,7 +1,17 @@
 <template>
   <div class="mount-explorer-container mx-auto px-3 sm:px-6 flex-1 flex flex-col pt-6 sm:pt-8 w-full max-w-full sm:max-w-6xl">
     <div class="header mb-4 border-b pb-2 flex justify-between items-center" :class="darkMode ? 'border-gray-800' : 'border-gray-100'">
-      <h2 class="text-xl font-semibold" :class="darkMode ? 'text-gray-100' : 'text-gray-900'">{{ $t("mount.title") }}</h2>
+      <!-- 面包屑导航 -->
+      <div class="flex-1 min-w-0 pr-2">
+        <BreadcrumbNav
+          :current-path="currentViewPath"
+          :dark-mode="darkMode"
+          @navigate="handleNavigate"
+          @prefetch="handlePrefetch"
+          :basic-path="apiKeyInfo?.basic_path || '/'"
+          :user-type="isAdmin ? 'admin' : 'user'"
+        />
+      </div>
 
       <!-- 右侧按钮组 -->
       <div class="flex items-center gap-2">
@@ -73,6 +83,8 @@
             :dark-mode="darkMode"
             :view-mode="viewMode"
             :selected-items="selectedItems"
+            :mounts="activeMounts"
+            :current-mount-id="currentMountId"
             @create-folder="handleCreateFolder"
             @refresh="handleRefresh"
             @change-view-mode="handleViewModeChange"
@@ -81,6 +93,7 @@
             @openTasksModal="handleOpenTasksModal"
             @task-created="handleTaskCreated"
             @show-message="handleShowMessage"
+            @change-mount="handleNavigate"
           />
         </div>
       </div>
@@ -197,18 +210,6 @@
         </template>
       </ConfirmDialog>
 
-
-      <!-- 面包屑导航 -->
-      <div class="mb-4">
-          <BreadcrumbNav
-          :current-path="currentViewPath"
-          :dark-mode="darkMode"
-          @navigate="handleNavigate"
-          @prefetch="handlePrefetch"
-          :basic-path="apiKeyInfo?.basic_path || '/'"
-          :user-type="isAdmin ? 'admin' : 'user'"
-        />
-      </div>
 
       <!-- 内容区域 - 根据模式显示文件列表或文件预览 -->
       <div class="mount-content bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-200">
@@ -419,6 +420,8 @@ import { useEventListener, useWindowScroll } from "@vueuse/core";
 import { useThemeMode } from "@/composables/core/useThemeMode.js";
 import { IconBack, IconExclamation, IconSearch, IconSettings, IconXCircle } from "@/components/icons";
 import LoadingIndicator from "@/components/common/LoadingIndicator.vue";
+import { api } from "@/api";
+import { useAuthStore } from "@/stores/authStore.js";
 
 // 组合式函数 - 使用统一聚合导出
 // 按需从具体文件导入
@@ -468,6 +471,30 @@ const fileOperations = useFileOperations();
 const uiState = useUIState();
 const fileBasket = useFileBasket();
 const pathPassword = usePathPassword();
+
+const authStore = useAuthStore();
+const activeMounts = ref([]);
+const fetchActiveMounts = async () => {
+  try {
+    const list = await api.mount.getMountsList();
+    if (Array.isArray(list)) {
+      activeMounts.value = list.filter((m) => m.is_active);
+    }
+  } catch (err) {
+    log.error("获取挂载列表失败:", err);
+  }
+};
+
+watch(
+  () => authStore.isAuthenticated,
+  async (authenticated) => {
+    if (authenticated) {
+      await fetchActiveMounts();
+    } else {
+      activeMounts.value = [];
+    }
+  }
+);
 
 // 右键菜单 - 延迟初始化
 let contextMenu = null;
@@ -729,10 +756,13 @@ const initContextMenu = () => {
   });
 };
 
-onMounted(() => {
+onMounted(async () => {
   explorerSettings.loadSettings();
   explorerSettings.setupDarkModeObserver();
   initContextMenu();
+  if (authStore.isAuthenticated) {
+    await fetchActiveMounts();
+  }
 });
 
 const props = defineProps({

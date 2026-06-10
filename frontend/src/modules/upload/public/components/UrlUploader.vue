@@ -188,8 +188,8 @@
                   :disabled="!storageConfigs.length || loading || isUploading"
                   required
                 >
-                  <option value="" disabled selected>{{ storageConfigs.length ? t("file.selectStorage") : t("file.noStorage") }}</option>
-                  <option v-for="config in storageConfigs" :key="config.id" :value="config.id">{{ formatStorageOptionLabel(config) }}</option>
+                  <option value="" disabled selected :class="darkMode ? 'bg-gray-700 text-gray-400' : 'bg-white text-gray-500'">{{ storageConfigs.length ? t("file.selectStorage") : t("file.noStorage") }}</option>
+                  <option v-for="config in storageConfigs" :key="config.id" :value="config.id" :class="darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900'">{{ formatStorageOptionLabel(config) }}</option>
                 </select>
                 <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                   <svg
@@ -298,11 +298,11 @@
                 ]"
                 :disabled="isUploading"
               >
-                <option value="1">{{ t("file.expireOptions.hour1") }}</option>
-                <option value="24">{{ t("file.expireOptions.day1") }}</option>
-                <option value="168">{{ t("file.expireOptions.day7") }}</option>
-                <option value="720">{{ t("file.expireOptions.day30") }}</option>
-                <option value="0">{{ t("file.expireOptions.never") }}</option>
+                <option value="1" :class="darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900'">{{ t("file.expireOptions.hour1") }}</option>
+                <option value="24" :class="darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900'">{{ t("file.expireOptions.day1") }}</option>
+                <option value="168" :class="darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900'">{{ t("file.expireOptions.day7") }}</option>
+                <option value="720" :class="darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900'">{{ t("file.expireOptions.day30") }}</option>
+                <option value="0" :class="darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900'">{{ t("file.expireOptions.never") }}</option>
               </select>
             </div>
 

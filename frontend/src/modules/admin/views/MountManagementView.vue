@@ -246,7 +246,7 @@ onMounted(() => {
                 <!-- 名称 + 状态 -->
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
-                    <span class="w-2 h-2 rounded-full mr-2" :class="mount.is_active ? 'bg-green-400' : 'bg-gray-400'"></span>
+                    <span class="w-2 h-2 rounded-full mr-2" :class="mount.is_active ? 'bg-blue-500' : 'bg-gray-400'"></span>
                     <span class="text-sm font-medium" :class="darkMode ? 'text-white' : 'text-gray-900'">{{ mount.name }}</span>
                   </div>
                 </td>
@@ -298,7 +298,7 @@ onMounted(() => {
                       <button
                         @click="openEditForm(mount)"
                         class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                        :class="darkMode ? 'text-indigo-400 hover:text-indigo-300' : 'text-indigo-600 hover:text-indigo-900'"
+                        :class="darkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700'"
                         :title="$t('admin.mount.actions.edit')">
                         <IconRename class="h-5 w-5" />
                       </button>
@@ -307,9 +307,7 @@ onMounted(() => {
                         @click="toggleActive(mount)"
                         :disabled="isMountToggling(mount.id)"
                         class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        :class="mount.is_active
-                          ? (darkMode ? 'text-yellow-400 hover:text-yellow-300' : 'text-yellow-600 hover:text-yellow-900')
-                          : (darkMode ? 'text-green-400 hover:text-green-300' : 'text-green-600 hover:text-green-900')"
+                        :class="darkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700'"
                         :title="mount.is_active ? $t('admin.mount.actions.disable') : $t('admin.mount.actions.enable')">
                         <IconRefresh v-if="isMountToggling(mount.id)" class="h-5 w-5 animate-spin" />
                         <IconXCircle v-else-if="mount.is_active" class="h-5 w-5" />
@@ -319,8 +317,8 @@ onMounted(() => {
                       <button
                         @click="confirmDelete(mount.id)"
                         :disabled="isMountDeleting(mount.id)"
-                        class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        :class="darkMode ? 'text-red-400 hover:text-red-300' : 'text-red-600 hover:text-red-900'"
+                        class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-red-900/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        :class="darkMode ? 'text-gray-400 hover:text-red-400' : 'text-gray-500 hover:text-red-600'"
                         :title="$t('admin.mount.actions.delete')">
                         <IconRefresh v-if="isMountDeleting(mount.id)" class="h-5 w-5 animate-spin" />
                         <IconDelete v-else class="h-5 w-5" />
@@ -348,11 +346,11 @@ onMounted(() => {
               <div>
                 <div class="flex justify-between items-start mb-3">
                   <h3 class="text-base font-medium truncate" :class="darkMode ? 'text-white' : 'text-gray-900'" :title="mount.name">{{ mount.name }}</h3>
-                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border"
                         :class="mount.is_active
-                          ? (darkMode ? 'bg-green-900/50 text-green-200' : 'bg-green-100 text-green-800')
-                          : (darkMode ? 'bg-gray-800 text-gray-300' : 'bg-gray-100 text-gray-800')">
-                    <span class="w-1.5 h-1.5 rounded-full mr-1" :class="mount.is_active ? 'bg-green-400' : 'bg-gray-400'"></span>
+                          ? (darkMode ? 'bg-blue-900/30 text-blue-300 border-blue-800' : 'bg-blue-50 text-blue-700 border-blue-200')
+                          : (darkMode ? 'bg-gray-800 text-gray-400 border-gray-700' : 'bg-gray-100 text-gray-500 border-gray-200')">
+                    <span class="w-1.5 h-1.5 rounded-full mr-1" :class="mount.is_active ? 'bg-blue-500' : 'bg-gray-400'"></span>
                     {{ mount.is_active ? $t("admin.mount.status.enabled") : $t("admin.mount.status.disabled") }}
                   </span>
                 </div>
@@ -370,23 +368,21 @@ onMounted(() => {
               </div>
               <div class="flex justify-end space-x-2 mt-3">
                 <template v-if="isAdmin">
-                  <button @click="openEditForm(mount)" class="px-2.5 py-1.5 rounded-md text-xs transition-colors"
-                          :class="darkMode ? 'bg-gray-600 hover:bg-gray-500 text-gray-200' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'">
+                  <button @click="openEditForm(mount)" class="px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors border"
+                          :class="darkMode ? 'bg-gray-800 hover:bg-gray-700 text-gray-300 border-gray-700' : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-300'">
                     {{ $t("admin.mount.actions.edit") }}
                   </button>
                   <button @click="toggleActive(mount)"
                           :disabled="isMountToggling(mount.id)"
-                          class="px-2.5 py-1.5 rounded-md text-xs transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center"
-                          :class="mount.is_active
-                            ? (darkMode ? 'bg-yellow-700 hover:bg-yellow-600 text-yellow-100' : 'bg-yellow-100 hover:bg-yellow-200 text-yellow-800')
-                            : (darkMode ? 'bg-green-700 hover:bg-green-600 text-green-100' : 'bg-green-100 hover:bg-green-200 text-green-800')">
+                          class="px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors border disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center"
+                          :class="darkMode ? 'bg-gray-800 hover:bg-gray-700 text-gray-300 border-gray-700' : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-300'">
                     <IconRefresh v-if="isMountToggling(mount.id)" class="h-3 w-3 mr-1 animate-spin" />
                     {{ mount.is_active ? $t("admin.mount.actions.disable") : $t("admin.mount.actions.enable") }}
                   </button>
                   <button @click="confirmDelete(mount.id)"
                           :disabled="isMountDeleting(mount.id)"
-                          class="px-2.5 py-1.5 rounded-md text-xs transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center"
-                          :class="darkMode ? 'bg-red-700 hover:bg-red-600 text-red-100' : 'bg-red-100 hover:bg-red-200 text-red-800'">
+                          class="px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors border disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center"
+                          :class="darkMode ? 'bg-gray-800 hover:bg-red-900/30 text-gray-300 hover:text-red-400 border-gray-700 hover:border-red-800' : 'bg-white hover:bg-red-50 text-gray-700 hover:text-red-600 border-gray-300 hover:border-red-200'">
                     <IconRefresh v-if="isMountDeleting(mount.id)" class="h-3 w-3 mr-1 animate-spin" />
                     {{ $t("admin.mount.actions.delete") }}
                   </button>
@@ -419,19 +415,19 @@ onMounted(() => {
                   {{ mount.name }}
                 </h3>
                 <span
-                  class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium transition-colors duration-200"
+                  class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium transition-colors duration-200 border"
                   :class="
                     mount.is_active
                       ? darkMode
-                        ? 'bg-green-900/50 text-green-200 border border-green-800/50'
-                        : 'bg-green-100 text-green-800 border border-green-200'
+                        ? 'bg-blue-900/30 text-blue-300 border-blue-800'
+                        : 'bg-blue-50 text-blue-700 border-blue-200'
                       : darkMode
-                      ? 'bg-gray-800 text-gray-300 border border-gray-700'
-                      : 'bg-gray-100 text-gray-800 border border-gray-200'
+                      ? 'bg-gray-800 text-gray-400 border-gray-700'
+                      : 'bg-gray-100 text-gray-500 border-gray-200'
                   "
                 >
                   <span class="flex items-center">
-                    <span class="w-1.5 h-1.5 rounded-full mr-1" :class="mount.is_active ? 'bg-green-400' : 'bg-gray-400'"></span>
+                    <span class="w-1.5 h-1.5 rounded-full mr-1" :class="mount.is_active ? 'bg-blue-500' : 'bg-gray-400'"></span>
                     {{ mount.is_active ? $t("admin.mount.status.enabled") : $t("admin.mount.status.disabled") }}
                   </span>
                 </span>
@@ -523,7 +519,7 @@ onMounted(() => {
                     :class="darkMode ? 'text-gray-500' : 'text-gray-400'"
                   />
                   <span>{{ $t("admin.mount.info.createdBy") }}: </span>
-                  <span class="ml-1 px-1.5 py-0.5 text-xs rounded" :class="getCreatorClass(mount)">
+                  <span class="ml-1 px-1.5 py-0.5 text-xs rounded border" :class="getCreatorClass(mount)">
                     {{ formatCreator(mount) }}
                   </span>
                 </div>
@@ -535,11 +531,11 @@ onMounted(() => {
                 <template v-if="isAdmin">
                   <button
                     @click="openEditForm(mount)"
-                    class="inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1"
+                    class="inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 border focus:outline-none focus:ring-2 focus:ring-offset-1"
                     :class="
                       darkMode
-                        ? 'bg-gray-600 hover:bg-gray-500 text-gray-200 focus:ring-blue-500 focus:ring-offset-gray-800'
-                        : 'bg-gray-100 hover:bg-gray-200 text-gray-700 focus:ring-blue-500 focus:ring-offset-white'
+                        ? 'bg-gray-800 hover:bg-gray-700 text-gray-300 border-gray-700 focus:ring-gray-500 focus:ring-offset-gray-800'
+                        : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-300 focus:ring-gray-300 focus:ring-offset-white'
                     "
                   >
                     <IconRename class="h-3.5 w-3.5 mr-1" />
@@ -549,15 +545,11 @@ onMounted(() => {
                   <button
                     @click="toggleActive(mount)"
                     :disabled="isMountToggling(mount.id)"
-                    class="inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                    class="inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 border focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed"
                     :class="
                       darkMode
-                        ? mount.is_active
-                          ? 'bg-yellow-700 hover:bg-yellow-600 text-yellow-100 focus:ring-yellow-500 focus:ring-offset-gray-800'
-                          : 'bg-green-700 hover:bg-green-600 text-green-100 focus:ring-green-500 focus:ring-offset-gray-800'
-                        : mount.is_active
-                        ? 'bg-yellow-100 hover:bg-yellow-200 text-yellow-800 focus:ring-yellow-500 focus:ring-offset-white'
-                        : 'bg-green-100 hover:bg-green-200 text-green-800 focus:ring-green-500 focus:ring-offset-white'
+                        ? 'bg-gray-800 hover:bg-gray-700 text-gray-300 border-gray-700 focus:ring-gray-500 focus:ring-offset-gray-800'
+                        : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-300 focus:ring-gray-300 focus:ring-offset-white'
                     "
                   >
                     <IconRefresh v-if="isMountToggling(mount.id)" class="h-3.5 w-3.5 mr-1 animate-spin" />
@@ -568,11 +560,11 @@ onMounted(() => {
                   <button
                     @click="confirmDelete(mount.id)"
                     :disabled="isMountDeleting(mount.id)"
-                    class="inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                    class="inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 border focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed"
                     :class="
                       darkMode
-                        ? 'bg-red-700 hover:bg-red-600 text-red-100 focus:ring-red-500 focus:ring-offset-gray-800'
-                        : 'bg-red-100 hover:bg-red-200 text-red-800 focus:ring-red-500 focus:ring-offset-white'
+                        ? 'bg-gray-800 hover:bg-red-900/30 text-gray-300 hover:text-red-400 border-gray-700 hover:border-red-800 focus:ring-red-500 focus:ring-offset-gray-800'
+                        : 'bg-white hover:bg-red-50 text-gray-700 hover:text-red-600 border-gray-300 hover:border-red-200 focus:ring-red-500 focus:ring-offset-white'
                     "
                   >
                     <IconRefresh v-if="isMountDeleting(mount.id)" class="h-3.5 w-3.5 mr-1 animate-spin" />

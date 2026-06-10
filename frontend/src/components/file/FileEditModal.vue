@@ -69,11 +69,11 @@
               v-model="expiryOption"
               class="w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
             >
-              <option value="1">1小时</option>
-              <option value="24">1天</option>
-              <option value="168">7天</option>
-              <option value="720">30天</option>
-              <option value="0">永不过期</option>
+              <option value="1" :class="darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900'">1小时</option>
+              <option value="24" :class="darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900'">1天</option>
+              <option value="168" :class="darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900'">7天</option>
+              <option value="720" :class="darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900'">30天</option>
+              <option value="0" :class="darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900'">永不过期</option>
             </select>
           </div>
 

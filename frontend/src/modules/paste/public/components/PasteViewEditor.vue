@@ -120,11 +120,11 @@
           <div class="form-group">
             <label class="form-label block mb-1 text-sm font-medium" :class="darkMode ? 'text-gray-300' : 'text-gray-700'">过期时间</label>
             <select class="form-input w-full rounded-md shadow-sm" :class="getInputClasses(darkMode)" v-model="editForm.expiryTime">
-              <option value="1">1小时</option>
-              <option value="24">1天</option>
-              <option value="168">7天</option>
-              <option value="720">30天</option>
-              <option value="0">永不过期</option>
+              <option value="1" :class="darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'">1小时</option>
+              <option value="24" :class="darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'">1天</option>
+              <option value="168" :class="darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'">7天</option>
+              <option value="720" :class="darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'">30天</option>
+              <option value="0" :class="darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'">永不过期</option>
             </select>
           </div>
 

@@ -34,7 +34,7 @@
                 <!-- 文件名 -->
                 <div
                   class="font-medium cursor-pointer hover:underline"
-                  :class="darkMode ? 'text-primary-400' : 'text-primary-600'"
+                  :class="darkMode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-700 hover:text-gray-900'"
                   :title="file.filename"
                   @click.stop="openFileLink(file)"
                 >{{ truncateFilename(file.filename) }}</div>
@@ -131,11 +131,11 @@
             <div :class="darkMode ? 'text-gray-300' : 'text-gray-700'" class="flex flex-col">
               <span
                 v-if="file.created_by && file.created_by.startsWith('apikey:')"
-                class="px-2 py-1 text-xs rounded bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100 inline-block mt-1 w-fit"
+                class="px-2 py-1 text-xs rounded bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 inline-block mt-1 w-fit"
               >
                 {{ file.key_name ? `密钥：${file.key_name}` : `密钥：${file.created_by.substring(7, 12)}...` }}
               </span>
-              <span v-else-if="file.created_by" class="px-2 py-1 text-xs rounded bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100 inline-block mt-1 w-fit">
+              <span v-else-if="file.created_by" class="px-2 py-1 text-xs rounded bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 inline-block mt-1 w-fit">
                 管理员
               </span>
               <span v-else class="px-2 py-1 text-xs rounded bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 inline-block mt-1 w-fit"> 未知来源 </span>
@@ -151,17 +151,17 @@
 
         <!-- 操作按钮 -->
         <div class="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end space-x-2">
-          <button @click="$emit('preview', file)" class="p-2 rounded-md" :class="darkMode ? 'bg-gray-700 text-blue-400' : 'bg-gray-100 text-blue-600'">
+          <button @click="$emit('preview', file)" class="p-2 rounded-md" :class="darkMode ? 'bg-gray-700 text-gray-400 hover:text-gray-200' : 'bg-gray-100 text-gray-600 hover:text-gray-900'">
             <IconEye class="h-5 w-5" />
           </button>
-          <button @click="$emit('edit', file)" class="p-2 rounded-md" :class="darkMode ? 'bg-gray-700 text-green-400' : 'bg-gray-100 text-green-600'">
+          <button @click="$emit('edit', file)" class="p-2 rounded-md" :class="darkMode ? 'bg-gray-700 text-gray-400 hover:text-gray-200' : 'bg-gray-100 text-gray-600 hover:text-gray-900'">
             <IconRename class="h-5 w-5" />
           </button>
           <!-- 移动端复制永久直链按钮 -->
-          <button @click="emit('copy-permanent-link', file)" class="p-2 rounded-md relative" :class="darkMode ? 'bg-gray-700 text-purple-400' : 'bg-gray-100 text-purple-600'">
+          <button @click="emit('copy-permanent-link', file)" class="p-2 rounded-md relative" :class="darkMode ? 'bg-gray-700 text-gray-400 hover:text-gray-200' : 'bg-gray-100 text-gray-600 hover:text-gray-900'">
             <IconLink class="h-5 w-5" />
           </button>
-          <button @click="$emit('delete', file)" class="p-2 rounded-md" :class="darkMode ? 'bg-gray-700 text-red-400' : 'bg-gray-100 text-red-600'">
+          <button @click="$emit('delete', file)" class="p-2 rounded-md" :class="darkMode ? 'bg-gray-700 text-gray-400 hover:text-gray-200' : 'bg-gray-100 text-gray-600 hover:text-gray-900'">
             <IconDelete class="h-5 w-5" />
           </button>
         </div>
@@ -253,7 +253,7 @@ const fileColumns = computed(() => [
             {
               class: [
                 "font-medium truncate max-w-64 cursor-pointer hover:underline",
-                props.darkMode ? "text-primary-400" : "text-primary-600",
+                props.darkMode ? "text-gray-300 hover:text-gray-100" : "text-gray-700 hover:text-gray-900",
               ],
               title: file.filename,
               onClick: (e) => {
@@ -452,10 +452,10 @@ const fileColumns = computed(() => [
       let badgeClass, text;
 
       if (file.created_by && file.created_by.startsWith("apikey:")) {
-        badgeClass = "px-2 py-1 text-xs rounded bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100";
+        badgeClass = "px-2 py-1 text-xs rounded bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
         text = file.key_name ? `密钥：${file.key_name}` : `密钥：${file.created_by.substring(7, 12)}...`;
       } else if (file.created_by) {
-        badgeClass = "px-2 py-1 text-xs rounded bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100";
+        badgeClass = "px-2 py-1 text-xs rounded bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
         text = "管理员";
       } else {
         badgeClass = "px-2 py-1 text-xs rounded bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
@@ -486,7 +486,7 @@ const fileColumns = computed(() => [
         {
           title: "预览",
           event: () => emit("preview", file),
-          color: "text-blue-600 hover:text-blue-900 dark:text-blue-400",
+          color: "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200",
           svg: h(
             "svg",
             {
@@ -510,7 +510,7 @@ const fileColumns = computed(() => [
         {
           title: "编辑",
           event: () => emit("edit", file),
-          color: "text-green-600 hover:text-green-900 dark:text-green-400",
+          color: "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200",
           svg: h(
             "svg",
             {
@@ -533,7 +533,7 @@ const fileColumns = computed(() => [
         {
           title: "复制直链",
           event: () => emit("copy-permanent-link", file),
-          color: "text-purple-600 hover:text-purple-900 dark:text-purple-400",
+          color: "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200",
           svg: h(
             "svg",
             {
@@ -555,7 +555,7 @@ const fileColumns = computed(() => [
         actions.push({
           title: "删除",
           event: () => emit("delete", file),
-          color: "text-red-600 hover:text-red-900 dark:text-red-400",
+          color: "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200",
           svg: h(
             "svg",
             {
@@ -668,23 +668,7 @@ const getSimpleMimeType = (mimeType, filename, file) => {
 };
 
 const getMimeTypeClass = (file) => {
-  const type = file.type || 0;
-  switch (type) {
-    case 1: // VIDEO
-      return props.darkMode ? "bg-purple-900/50 text-purple-300" : "bg-purple-100 text-purple-800";
-    case 2: // ARCHIVE
-      return props.darkMode ? "bg-orange-900/50 text-orange-300" : "bg-orange-100 text-orange-800";
-    case 3: // AUDIO
-      return props.darkMode ? "bg-green-900/50 text-green-300" : "bg-green-100 text-green-800";
-    case 4: // TEXT
-      return props.darkMode ? "bg-yellow-900/50 text-yellow-300" : "bg-yellow-100 text-yellow-800";
-    case 5: // IMAGE
-      return props.darkMode ? "bg-pink-900/50 text-pink-300" : "bg-pink-100 text-pink-800";
-    case 6: // OFFICE
-      return props.darkMode ? "bg-red-900/50 text-red-300" : "bg-red-100 text-red-800";
-    default: // UNKNOWN
-      return props.darkMode ? "bg-gray-700 text-gray-300" : "bg-gray-100 text-gray-700";
-  }
+  return props.darkMode ? "bg-gray-700 text-gray-300" : "bg-gray-100 text-gray-700";
 };
 
 const passwordBadgeBaseClass = computed(
@@ -745,11 +729,11 @@ const renderPasswordBadge = (extraClass = "") =>
 const proxyBadgeBaseClass = computed(
   () =>
     `inline-flex items-center gap-1 rounded-full border px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${
-      props.darkMode ? "bg-sky-500/15 text-sky-100 border-sky-400/30" : "bg-sky-50 text-sky-700 border-sky-200"
+      props.darkMode ? "bg-blue-500/15 text-blue-100 border-blue-400/30" : "bg-blue-50 text-blue-700 border-blue-200"
     }`
 );
 
-const proxyIconClass = computed(() => (props.darkMode ? "text-sky-200" : "text-sky-600"));
+const proxyIconClass = computed(() => (props.darkMode ? "text-blue-200" : "text-blue-600"));
 
 const renderProxyBadge = (extraClass = "") =>
   h(

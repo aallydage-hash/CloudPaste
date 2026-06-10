@@ -494,7 +494,7 @@ export function useMountManagement(options = {}) {
     }
 
     if (creatorType === "admin") {
-      return darkModeValue ? "bg-green-900/50 text-green-200 border border-green-800/50" : "bg-green-100 text-green-800 border border-green-200";
+      return darkModeValue ? "bg-gray-800 text-gray-300 border-gray-700" : "bg-gray-100 text-gray-700 border-gray-200";
     }
 
     if (creatorType === "apikey") {

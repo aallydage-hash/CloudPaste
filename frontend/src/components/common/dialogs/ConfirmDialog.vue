@@ -112,12 +112,12 @@ const confirmButtonClass = computed(() => {
 
   switch (props.confirmType) {
     case "danger":
-      return `${baseClass} ${props.loading ? "bg-red-500" : "bg-red-600 hover:bg-red-700"} ${loadingClass}`;
+      return `${baseClass} ${props.loading ? "bg-gray-500" : props.darkMode ? "bg-gray-600 hover:bg-gray-700" : "bg-gray-600 hover:bg-gray-700"} ${loadingClass}`;
     case "warning":
-      return `${baseClass} ${props.loading ? "bg-yellow-500" : "bg-yellow-600 hover:bg-yellow-700"} ${loadingClass}`;
+      return `${baseClass} ${props.loading ? "bg-gray-500" : props.darkMode ? "bg-gray-600 hover:bg-gray-700" : "bg-gray-600 hover:bg-gray-700"} ${loadingClass}`;
     case "primary":
     default:
-      return `${baseClass} ${props.loading ? "bg-primary-500" : props.darkMode ? "bg-primary-600 hover:bg-primary-700" : "bg-primary-500 hover:bg-primary-600"} ${loadingClass}`;
+      return `${baseClass} ${props.loading ? "bg-gray-500" : props.darkMode ? "bg-gray-600 hover:bg-gray-700" : "bg-gray-600 hover:bg-gray-700"} ${loadingClass}`;
   }
 });
 

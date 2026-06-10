@@ -76,21 +76,7 @@ const githubUrl = "https://github.com/ling-drag0n/CloudPaste";
 // 检查是否为开发环境
 const isDev = import.meta.env.DEV;
 
-  // 计算是否显示页脚
-  const shouldShowFooter = computed(() => {
-    // 管理面板页面不显示页脚
-    if (activePage.value === "admin") {
-      return false;
-    }
 
-    // 站点配置还没初始化完之前，不要先按默认值显示页脚
-    if (!siteConfigStore.isInitialized) {
-      return false;
-    }
-
-    const footerMarkdown = siteConfigStore.siteFooterMarkdown;
-    return footerMarkdown && footerMarkdown.trim();
-  });
 
   // 切换移动端菜单状态
   const toggleMobileMenu = () => {
@@ -149,7 +135,7 @@ const isDev = import.meta.env.DEV;
                 to="/"
                 v-if="canShowHomeEntry"
                 :class="[
-                  activePage === 'home' ? 'border-primary-500 text-current' : 'border-transparent hover:border-gray-300',
+                  activePage === 'home' ? 'border-gray-500 text-current' : 'border-transparent hover:border-gray-300',
                   'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200',
                   activePage !== 'home' && isDarkMode ? 'text-gray-300 hover:text-gray-100' : activePage !== 'home' ? 'text-gray-500 hover:text-gray-700' : '',
                 ]"
@@ -160,7 +146,7 @@ const isDev = import.meta.env.DEV;
                 to="/upload"
                 v-if="canShowUploadEntry"
                 :class="[
-                  activePage === 'upload' ? 'border-primary-500 text-current' : 'border-transparent hover:border-gray-300',
+                  activePage === 'upload' ? 'border-gray-500 text-current' : 'border-transparent hover:border-gray-300',
                   'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200',
                   activePage !== 'upload' && isDarkMode ? 'text-gray-300 hover:text-gray-100' : activePage !== 'upload' ? 'text-gray-500 hover:text-gray-700' : '',
                 ]"
@@ -171,7 +157,7 @@ const isDev = import.meta.env.DEV;
                 to="/mount-explorer"
                 v-if="canShowMountEntry"
                 :class="[
-                  activePage === 'mount-explorer' ? 'border-primary-500 text-current' : 'border-transparent hover:border-gray-300',
+                  activePage === 'mount-explorer' ? 'border-gray-500 text-current' : 'border-transparent hover:border-gray-300',
                   'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200',
                   activePage !== 'mount-explorer' && isDarkMode ? 'text-gray-300 hover:text-gray-100' : activePage !== 'mount-explorer' ? 'text-gray-500 hover:text-gray-700' : '',
                 ]"
@@ -181,7 +167,7 @@ const isDev = import.meta.env.DEV;
               <router-link
                 to="/admin"
                 :class="[
-                  activePage === 'admin' ? 'border-primary-500 text-current' : 'border-transparent hover:border-gray-300',
+                  activePage === 'admin' ? 'border-gray-500 text-current' : 'border-transparent hover:border-gray-300',
                   'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200',
                   activePage !== 'admin' && isDarkMode ? 'text-gray-300 hover:text-gray-100' : activePage !== 'admin' ? 'text-gray-500 hover:text-gray-700' : '',
                 ]"
@@ -336,11 +322,6 @@ const isDev = import.meta.env.DEV;
       <router-view :dark-mode="isDarkMode" class="transition-opacity duration-300 flex-1 flex flex-col" :class="{ 'opacity-0': transitioning }" />
     </main>
 
-    <footer v-if="shouldShowFooter" :class="['border-t transition-colors mt-auto', isDarkMode ? 'bg-custom-surface-dark border-white/5' : 'bg-custom-surface border-gray-200']">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-6">
-        <FooterMarkdownRenderer :content="siteConfigStore.siteFooterMarkdown" :dark-mode="isDarkMode" />
-      </div>
-    </footer>
 
     <!-- 添加环境切换器组件 (在开发环境或管理员登录状态下显示) -->
     <!-- <EnvSwitcher v-if="showEnvSwitcher" /> -->
