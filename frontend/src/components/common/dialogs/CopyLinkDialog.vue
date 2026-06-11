@@ -203,14 +203,14 @@ const props = defineProps({
 
 const emit = defineEmits(["close"]);
 
-const activeFormat = ref("url");
+const activeFormat = ref("markdown");
 const copiedPath = ref("");
 const allCopied = ref(false);
 const itemsWithStatus = ref([]);
 
 const formatOptions = computed(() => [
-  { id: "url", name: t("mount.copyLinkDialog.formats.url", "直链") },
   { id: "markdown", name: "Markdown" },
+  { id: "url", name: t("mount.copyLinkDialog.formats.url", "直链") },
   { id: "html", name: "HTML" },
   { id: "bbcode", name: "BBCode" },
 ]);
@@ -313,7 +313,7 @@ watch(
     if (val) {
       copiedPath.value = "";
       allCopied.value = false;
-      activeFormat.value = "url";
+      activeFormat.value = "markdown";
       loadAllUrls();
     }
   }
