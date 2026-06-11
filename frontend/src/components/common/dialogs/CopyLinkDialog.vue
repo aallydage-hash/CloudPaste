@@ -47,7 +47,7 @@
           </div>
 
           <!-- Items List -->
-          <div class="flex-1 overflow-y-auto px-6 py-4 min-h-0 space-y-4">
+          <div class="flex-1 overflow-y-auto px-6 py-4 min-h-0 space-y-4 items-list">
             <!-- Global loading (all items loading at once) -->
             <div v-if="allInitiallyLoading" class="py-12 flex flex-col items-center justify-center gap-3">
               <IconRefresh
@@ -333,6 +333,9 @@ onKeyStroke("Escape", () => {
 </script>
 
 <style scoped>
+.items-list {
+  max-height: 390px;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s ease;
