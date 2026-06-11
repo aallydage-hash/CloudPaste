@@ -108,3 +108,6 @@ out
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 .spec-workflow
+
+# Project sensitive credentials directory
+信息/
