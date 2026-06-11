@@ -407,13 +407,13 @@
       @settings="handleOpenSettingsDrawer"
     />
 
-    <!-- 复制链接底部抽屉 -->
-    <CopyLinkSheet
-      :is-open="showCopyLinkSheet"
+    <!-- 复制链接弹窗 -->
+    <CopyLinkDialog
+      :is-open="showCopyLinkDialog"
       :dark-mode="darkMode"
-      :items="copySheetItems"
+      :items="copyDialogItems"
       :load-url="loadFileUrl"
-      @close="showCopyLinkSheet = false"
+      @close="showCopyLinkDialog = false"
     />
 
     <!-- 返回顶部按钮 -->
@@ -458,7 +458,7 @@ const SearchModal = defineAsyncComponent(() => import("@/modules/fs/components/s
 import PathPasswordDialog from "@/modules/fs/components/shared/modals/PathPasswordDialog.vue";
 import ConfirmDialog from "@/components/common/dialogs/ConfirmDialog.vue";
 import InputDialog from "@/components/common/dialogs/InputDialog.vue";
-import CopyLinkSheet from "@/components/common/dialogs/CopyLinkSheet.vue";
+import CopyLinkDialog from "@/components/common/dialogs/CopyLinkDialog.vue";
 import { useFsService } from "@/modules/fs";
 const FsMediaLightboxDialog = defineAsyncComponent(() => import("@/modules/fs/components/lightbox/FsMediaLightboxDialog.vue"));
 import PermissionManager from "@/components/common/PermissionManager.vue";
@@ -650,10 +650,10 @@ const showDeleteDialog = ref(false);
 const itemsToDelete = ref([]);
 const isDeleting = ref(false);
 
-// 复制链接底部抽屉状态
-const showCopyLinkSheet = ref(false);
+// 复制链接弹窗状态
+const showCopyLinkDialog = ref(false);
 // [{name, path}] 数组，支持多选
-const copySheetItems = ref([]);
+const copyDialogItems = ref([]);
 
 // 加载单个文件直链（传给 CopyLinkSheet 的 loadUrl prop）
 const loadFileUrl = async (path) => {
@@ -844,8 +844,8 @@ const handleBatchGetLink = () => {
     showMessage("warning", t("mount.messages.noItemsSelected", "请先选择文件"));
     return;
   }
-  copySheetItems.value = selectedFiles.map((f) => ({ name: f.name, path: f.path }));
-  showCopyLinkSheet.value = true;
+  copyDialogItems.value = selectedFiles.map((f) => ({ name: f.name, path: f.path }));
+  showCopyLinkDialog.value = true;
 };
 
 const handleBatchRename = () => {
@@ -1050,8 +1050,8 @@ const handleDownload = async (item) => {
  */
 const handleGetLink = (item) => {
   if (!item || item.isDirectory) return;
-  copySheetItems.value = [{ name: item.name, path: item.path }];
-  showCopyLinkSheet.value = true;
+  copyDialogItems.value = [{ name: item.name, path: item.path }];
+  showCopyLinkDialog.value = true;
 };
 
 /**
