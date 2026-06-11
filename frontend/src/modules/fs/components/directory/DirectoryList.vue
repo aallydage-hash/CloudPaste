@@ -306,7 +306,6 @@ import SkeletonLoader from "../shared/SkeletonLoader.vue";
 import { IconChevronDown, IconChevronUp, IconDelete, IconDocument, IconDownload, IconFolderOpen, IconHamburger, IconLink, IconRename } from "@/components/icons";
 import { getFileIcon } from "@/utils/fileTypeIcons.js";
 import { useDirectorySort } from "@/composables/file-system/useDirectorySort.js";
-import { useFileOperations } from "@/composables/file-system/useFileOperations.js";
 import InputDialog from "@/components/common/dialogs/InputDialog.vue";
 import { createFsItemNameDialogValidator, validateFsItemName } from "@/utils/fsPathUtils.js";
 
@@ -324,8 +323,6 @@ const OVERSCAN = 10;
 
 // 使用新的组合式函数
 const { sortField, sortOrder, handleSort, getSortIcon, createSortedItems, initializeSortState } = useDirectorySort();
-
-const { getFileLink } = useFileOperations();
 
 const props = defineProps({
   items: {
@@ -698,14 +695,9 @@ const handleItemSelect = (item, selected) => {
   emit("item-select", item, selected);
 };
 
-// 处理文件直链获取（使用新的 composable）
-const handleGetLink = async (item) => {
-  const result = await getFileLink(item);
-
-  emit("show-message", {
-    type: result.success ? "success" : "error",
-    message: result.message,
-  });
+// 处理文件直链获取（冒泡到父组件以显示链接弹窗）
+const handleGetLink = (item) => {
+  emit("getLink", item);
 };
 
 // 处理消息显示

@@ -407,6 +407,16 @@
       @settings="handleOpenSettingsDrawer"
     />
 
+    <!-- 复制链接弹窗 -->
+    <CopyLinkDialog
+      :is-open="showCopyLinkDialog"
+      :dark-mode="darkMode"
+      :filename="copyLinkFilename"
+      :url="copyLinkUrl"
+      :loading="isCopyLinkLoading"
+      @close="showCopyLinkDialog = false"
+    />
+
     <!-- 返回顶部按钮 -->
     <BackToTop :dark-mode="darkMode" />
   </div>
@@ -449,6 +459,8 @@ const SearchModal = defineAsyncComponent(() => import("@/modules/fs/components/s
 import PathPasswordDialog from "@/modules/fs/components/shared/modals/PathPasswordDialog.vue";
 import ConfirmDialog from "@/components/common/dialogs/ConfirmDialog.vue";
 import InputDialog from "@/components/common/dialogs/InputDialog.vue";
+import CopyLinkDialog from "@/components/common/dialogs/CopyLinkDialog.vue";
+import { useFsService } from "@/modules/fs";
 const FsMediaLightboxDialog = defineAsyncComponent(() => import("@/modules/fs/components/lightbox/FsMediaLightboxDialog.vue"));
 import PermissionManager from "@/components/common/PermissionManager.vue";
 const SettingsDrawer = defineAsyncComponent(() => import("@/modules/fs/components/shared/SettingsDrawer.vue"));
@@ -468,6 +480,7 @@ const validateFsItemNameDialog = createFsItemNameDialogValidator(t);
 // 使用组合式函数
 const selection = useSelection();
 const fileOperations = useFileOperations();
+const fsService = useFsService();
 const uiState = useUIState();
 const fileBasket = useFileBasket();
 const pathPassword = usePathPassword();
@@ -637,6 +650,12 @@ const {
 const showDeleteDialog = ref(false);
 const itemsToDelete = ref([]);
 const isDeleting = ref(false);
+
+// 复制链接弹窗状态
+const showCopyLinkDialog = ref(false);
+const copyLinkFilename = ref("");
+const copyLinkUrl = ref("");
+const isCopyLinkLoading = ref(false);
 
 // 右键菜单相关状态
 const contextMenuRenameItem = ref(null);
@@ -1024,12 +1043,22 @@ const handleDownload = async (item) => {
  * 处理获取文件链接
  */
 const handleGetLink = async (item) => {
-  const result = await fileOperations.getFileLink(item);
+  if (!item || item.isDirectory) return;
 
-  if (result.success) {
-    showMessage("success", result.message);
-  } else {
-    showMessage("error", result.message);
+  isCopyLinkLoading.value = true;
+  copyLinkFilename.value = item.name;
+  copyLinkUrl.value = "";
+  showCopyLinkDialog.value = true;
+
+  try {
+    const url = await fsService.getFileLink(item.path, null, false);
+    copyLinkUrl.value = url;
+  } catch (error) {
+    log.error("获取文件直链失败:", error);
+    showMessage("error", error.message || t("mount.messages.getFileLinkError"));
+    showCopyLinkDialog.value = false;
+  } finally {
+    isCopyLinkLoading.value = false;
   }
 };
 

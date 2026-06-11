@@ -31,7 +31,7 @@
       <!-- 右侧视图操作按钮组 -->
       <div class="flex items-center space-x-2">
         <!-- 存储切换下拉菜单 -->
-        <div v-if="mounts && mounts.length > 1" id="storage-switcher-dropdown" class="relative inline-block text-left mr-2">
+        <div v-if="mounts && mounts.length >= 1" id="storage-switcher-dropdown" class="relative inline-block text-left mr-2">
           <button
             @click="isDropdownOpen = !isDropdownOpen"
             class="inline-flex items-center justify-between px-3 py-1.5 rounded-md sm:rounded-full transition-all duration-200 text-xs sm:text-sm font-medium shadow-sm hover:shadow-md active:scale-95 border"

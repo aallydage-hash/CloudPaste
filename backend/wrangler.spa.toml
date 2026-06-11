@@ -6,6 +6,7 @@ name = "cloudpaste-spa"
 main = "unified-entry.js"
 compatibility_date = "2025-09-01"
 compatibility_flags = ["nodejs_compat"]
+workers_dev = true
 
 # 开发服务器配置
 [dev]
@@ -28,7 +29,7 @@ ADMIN_TOKEN_EXPIRY_DAYS = "7"
 [[d1_databases]]
 binding = "DB"
 database_name = "cloudpaste-db"
-database_id = "a1452b1e-01d7-4ed0-99c7-8bb9f9caa458"
+database_id = "dd758a64-d464-406e-b4d1-4c923cac73e4"
 
 # Cloudflare Workflows 绑定
 # 用于异步任务作业的持久化执行 (支持多任务类型)

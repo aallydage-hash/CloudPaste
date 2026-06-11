@@ -88,13 +88,8 @@ const dismissUpdatePrompt = () => {
 
 // 检查是否应该显示安装提示
 const checkInstallPrompt = () => {
-  const dismissedTime = typeof dismissedAtMs.value === "number" ? dismissedAtMs.value : parseInt(String(dismissedAtMs.value || 0));
-  const daysSinceDismissed = (Date.now() - dismissedTime) / (1000 * 60 * 60 * 24);
-
-  // 如果超过7天或从未拒绝过，则显示提示
-  if (canInstall.value && (!dismissedTime || daysSinceDismissed > 7)) {
-    showInstallPrompt.value = true;
-  }
+  // 已停用安装提示
+  return;
 };
 
 // 监听PWA状态变化

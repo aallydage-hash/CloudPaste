@@ -154,6 +154,17 @@ export default {
       fileSaveFailed: "Failed to save file",
       linkCopiedSuccess: "File direct link copied to clipboard",
     },
+    copyLinkDialog: {
+      title: "Get File Links",
+      fileName: "File Name",
+      copied: "Copied!",
+      formats: {
+        url: "Direct Link",
+        markdown: "Markdown",
+        html: "HTML",
+        bbcode: "BBCode",
+      },
+    },
     filePreview: {
       downloadFile: "Download File",
       directPreview: "Direct Preview",

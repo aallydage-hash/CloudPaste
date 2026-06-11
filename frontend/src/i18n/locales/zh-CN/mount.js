@@ -153,6 +153,17 @@ export default {
       fileSaveFailed: "文件保存失败",
       linkCopiedSuccess: "文件直链已复制到剪贴板",
     },
+    copyLinkDialog: {
+      title: "获取文件链接",
+      fileName: "文件名",
+      copied: "已复制!",
+      formats: {
+        url: "直链",
+        markdown: "Markdown",
+        html: "HTML",
+        bbcode: "BBCode",
+      },
+    },
     filePreview: {
       downloadFile: "下载文件",
       directPreview: "直链预览",
