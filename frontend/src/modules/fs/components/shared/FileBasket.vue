@@ -4,7 +4,7 @@
     <button
       @click="toggleBasket"
       class="relative inline-flex items-center justify-center p-2 sm:px-4 sm:py-1.5 rounded-md sm:rounded-full transition-all duration-200 text-xs sm:text-sm font-medium shadow-sm hover:shadow-md active:scale-95"
-      :class="darkMode ? 'bg-primary-600/90 hover:bg-primary-600 text-white' : 'bg-white hover:bg-gray-50 text-gray-700 border border-gray-200'"
+      :class="darkMode ? 'bg-gray-700 hover:bg-gray-600 text-white' : 'bg-white hover:bg-gray-50 text-gray-700 border border-gray-200'"
       :title="basketTitle"
     >
       <!-- 文件篮图标 -->
