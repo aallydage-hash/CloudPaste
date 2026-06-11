@@ -407,14 +407,13 @@
       @settings="handleOpenSettingsDrawer"
     />
 
-    <!-- 复制链接弹窗 -->
-    <CopyLinkDialog
-      :is-open="showCopyLinkDialog"
+    <!-- 复制链接底部抽屉 -->
+    <CopyLinkSheet
+      :is-open="showCopyLinkSheet"
       :dark-mode="darkMode"
-      :filename="copyLinkFilename"
-      :url="copyLinkUrl"
-      :loading="isCopyLinkLoading"
-      @close="showCopyLinkDialog = false"
+      :items="copySheetItems"
+      :load-url="loadFileUrl"
+      @close="showCopyLinkSheet = false"
     />
 
     <!-- 返回顶部按钮 -->
@@ -459,7 +458,7 @@ const SearchModal = defineAsyncComponent(() => import("@/modules/fs/components/s
 import PathPasswordDialog from "@/modules/fs/components/shared/modals/PathPasswordDialog.vue";
 import ConfirmDialog from "@/components/common/dialogs/ConfirmDialog.vue";
 import InputDialog from "@/components/common/dialogs/InputDialog.vue";
-import CopyLinkDialog from "@/components/common/dialogs/CopyLinkDialog.vue";
+import CopyLinkSheet from "@/components/common/dialogs/CopyLinkSheet.vue";
 import { useFsService } from "@/modules/fs";
 const FsMediaLightboxDialog = defineAsyncComponent(() => import("@/modules/fs/components/lightbox/FsMediaLightboxDialog.vue"));
 import PermissionManager from "@/components/common/PermissionManager.vue";
@@ -651,11 +650,15 @@ const showDeleteDialog = ref(false);
 const itemsToDelete = ref([]);
 const isDeleting = ref(false);
 
-// 复制链接弹窗状态
-const showCopyLinkDialog = ref(false);
-const copyLinkFilename = ref("");
-const copyLinkUrl = ref("");
-const isCopyLinkLoading = ref(false);
+// 复制链接底部抽屉状态
+const showCopyLinkSheet = ref(false);
+// [{name, path}] 数组，支持多选
+const copySheetItems = ref([]);
+
+// 加载单个文件直链（传给 CopyLinkSheet 的 loadUrl prop）
+const loadFileUrl = async (path) => {
+  return await fsService.getFileLink(path, null, false);
+};
 
 // 右键菜单相关状态
 const contextMenuRenameItem = ref(null);
@@ -835,11 +838,14 @@ const handleBatchDownload = async () => {
   }
 };
 
-const handleBatchGetLink = async () => {
-  const selectedFiles = getSelectedItems();
-  if (selectedFiles.length === 1 && !selectedFiles[0].isDirectory) {
-    await handleGetLink(selectedFiles[0]);
+const handleBatchGetLink = () => {
+  const selectedFiles = getSelectedItems().filter((f) => !f.isDirectory);
+  if (selectedFiles.length === 0) {
+    showMessage("warning", t("mount.messages.noItemsSelected", "请先选择文件"));
+    return;
   }
+  copySheetItems.value = selectedFiles.map((f) => ({ name: f.name, path: f.path }));
+  showCopyLinkSheet.value = true;
 };
 
 const handleBatchRename = () => {
@@ -1040,26 +1046,12 @@ const handleDownload = async (item) => {
 };
 
 /**
- * 处理获取文件链接
+ * 处理获取文件链接（单个文件，从文件行或右键菜单触发）
  */
-const handleGetLink = async (item) => {
+const handleGetLink = (item) => {
   if (!item || item.isDirectory) return;
-
-  isCopyLinkLoading.value = true;
-  copyLinkFilename.value = item.name;
-  copyLinkUrl.value = "";
-  showCopyLinkDialog.value = true;
-
-  try {
-    const url = await fsService.getFileLink(item.path, null, false);
-    copyLinkUrl.value = url;
-  } catch (error) {
-    log.error("获取文件直链失败:", error);
-    showMessage("error", error.message || t("mount.messages.getFileLinkError"));
-    showCopyLinkDialog.value = false;
-  } finally {
-    isCopyLinkLoading.value = false;
-  }
+  copySheetItems.value = [{ name: item.name, path: item.path }];
+  showCopyLinkSheet.value = true;
 };
 
 /**
