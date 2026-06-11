@@ -32,7 +32,6 @@
         <ActionButton
           :title="t('mount.fileItem.getLink')"
           :dark-mode="darkMode"
-          :disabled="selectedCount > 1"
           @click="handleCopyLink"
         >
           <IconLink size="sm" />
@@ -157,9 +156,7 @@ function handleDownload() {
 }
 
 function handleCopyLink() {
-  if (props.selectedCount === 1) {
-    emit('copy-link')
-  }
+  emit('copy-link')
 }
 
 function handleCopy() {
