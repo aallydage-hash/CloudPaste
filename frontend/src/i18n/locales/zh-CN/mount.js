@@ -157,6 +157,7 @@ export default {
       title: "获取文件链接",
       fileName: "文件名",
       copied: "已复制!",
+      copy: "复制",
       formats: {
         url: "直链",
         markdown: "Markdown",

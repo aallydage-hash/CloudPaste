@@ -158,6 +158,7 @@ export default {
       title: "Get File Links",
       fileName: "File Name",
       copied: "Copied!",
+      copy: "Copy",
       formats: {
         url: "Direct Link",
         markdown: "Markdown",

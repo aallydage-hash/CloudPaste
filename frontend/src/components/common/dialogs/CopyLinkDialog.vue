@@ -123,7 +123,7 @@
                   >
                     <IconCheck v-if="copiedPath === item.path" size="sm" />
                     <IconCopy v-else size="sm" />
-                    <span>{{ copiedPath === item.path ? t('mount.copyLinkDialog.copied', '已复制') : t('common.dialogs.confirm', '复制') }}</span>
+                    <span>{{ copiedPath === item.path ? t('mount.copyLinkDialog.copied', '已复制') : t('mount.copyLinkDialog.copy', '复制') }}</span>
                   </button>
                 </div>
               </div>
@@ -203,14 +203,14 @@ const props = defineProps({
 
 const emit = defineEmits(["close"]);
 
-const activeFormat = ref("markdown");
+const activeFormat = ref("url");
 const copiedPath = ref("");
 const allCopied = ref(false);
 const itemsWithStatus = ref([]);
 
 const formatOptions = computed(() => [
-  { id: "markdown", name: "Markdown" },
   { id: "url", name: t("mount.copyLinkDialog.formats.url", "直链") },
+  { id: "markdown", name: "Markdown" },
   { id: "html", name: "HTML" },
   { id: "bbcode", name: "BBCode" },
 ]);
@@ -313,7 +313,7 @@ watch(
     if (val) {
       copiedPath.value = "";
       allCopied.value = false;
-      activeFormat.value = "markdown";
+      activeFormat.value = "url";
       loadAllUrls();
     }
   }
