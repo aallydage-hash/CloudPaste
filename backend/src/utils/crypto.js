@@ -62,8 +62,32 @@ const base64DecodeUtf8 = (base64) => {
  * @returns {Promise<string>} 密码哈希
  */
 export async function hashPassword(password) {
-  // 使用SHA-256哈希
-  return await sha256(password);
+  const salt = globalThis.crypto.getRandomValues(new Uint8Array(16));
+  const saltB64 = base64EncodeBytes(salt);
+  
+  const encoder = new TextEncoder();
+  const keyMaterial = await globalThis.crypto.subtle.importKey(
+    "raw",
+    encoder.encode(password),
+    { name: "PBKDF2" },
+    false,
+    ["deriveBits"]
+  );
+
+  const iterations = 100000;
+  const derivedBits = await globalThis.crypto.subtle.deriveBits(
+    {
+      name: "PBKDF2",
+      salt: salt,
+      iterations: iterations,
+      hash: "SHA-256"
+    },
+    keyMaterial,
+    256
+  );
+
+  const hashB64 = base64EncodeBytes(new Uint8Array(derivedBits));
+  return `pbkdf2:sha256:${iterations}:${saltB64}:${hashB64}`;
 }
 
 /**
@@ -73,14 +97,57 @@ export async function hashPassword(password) {
  * @returns {Promise<boolean>} 验证结果
  */
 export async function verifyPassword(plainPassword, hashedPassword) {
-  // 如果是SHA-256哈希（用于初始管理员密码）
   if (hashedPassword.length === 64) {
     const hashedInput = await sha256(plainPassword);
     return hashedInput === hashedPassword;
   }
 
-  // 默认比较
+  if (hashedPassword.startsWith("pbkdf2:")) {
+    const parts = hashedPassword.split(":");
+    if (parts.length !== 5) return false;
+    
+    const [, hashAlgo, iterationsStr, saltB64, hashB64] = parts;
+    const iterations = parseInt(iterationsStr, 10);
+    const salt = base64DecodeToBytes(saltB64);
+    
+    const encoder = new TextEncoder();
+    const keyMaterial = await globalThis.crypto.subtle.importKey(
+      "raw",
+      encoder.encode(plainPassword),
+      { name: "PBKDF2" },
+      false,
+      ["deriveBits"]
+    );
+
+    const derivedBits = await globalThis.crypto.subtle.deriveBits(
+      {
+        name: "PBKDF2",
+        salt: salt,
+        iterations: iterations,
+        hash: hashAlgo === "sha256" ? "SHA-256" : "SHA-256"
+      },
+      keyMaterial,
+      256
+    );
+
+    const computedHashB64 = base64EncodeBytes(new Uint8Array(derivedBits));
+    return computedHashB64 === hashB64;
+  }
+
   return plainPassword === hashedPassword;
+}
+
+// 辅助方法：生成 AES-GCM 密钥
+async function getAesKey(secret) {
+  const encoder = new TextEncoder();
+  const secretHash = await globalThis.crypto.subtle.digest("SHA-256", encoder.encode(secret));
+  return globalThis.crypto.subtle.importKey(
+    "raw",
+    secretHash,
+    { name: "AES-GCM" },
+    false,
+    ["encrypt", "decrypt"]
+  );
 }
 
 /**
@@ -90,17 +157,21 @@ export async function verifyPassword(plainPassword, hashedPassword) {
  * @returns {Promise<string>} 加密后的值
  */
 export async function encryptValue(value, secret) {
-  // 简单的加密方式
   const encoder = new TextEncoder();
   const data = encoder.encode(value);
-  const secretKey = await crypto.subtle.importKey("raw", encoder.encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
-
-  const signature = await crypto.subtle.sign("HMAC", secretKey, data);
-  const signatureB64 = base64EncodeBytes(new Uint8Array(signature));
-  const payloadB64 = base64EncodeUtf8(value);
-  const encryptedValue = `encrypted:${signatureB64}:${payloadB64}`;
-
-  return encryptedValue;
+  const iv = globalThis.crypto.getRandomValues(new Uint8Array(12));
+  
+  const key = await getAesKey(secret);
+  
+  const ciphertext = await globalThis.crypto.subtle.encrypt(
+    { name: "AES-GCM", iv },
+    key,
+    data
+  );
+  
+  const ivB64 = base64EncodeBytes(iv);
+  const ciphertextB64 = base64EncodeBytes(new Uint8Array(ciphertext));
+  return `aes-gcm:${ivB64}:${ciphertextB64}`;
 }
 
 /**
@@ -110,32 +181,41 @@ export async function encryptValue(value, secret) {
  * @returns {Promise<string>} 解密后的值
  */
 export async function decryptValue(encryptedValue, secret) {
-  // 检查是否为加密值
-  if (encryptedValue === undefined || encryptedValue === null) {
-    // 容错：未提供值时按原样返回，避免空值触发运行时错误
-    return encryptedValue;
-  }
-  if (typeof encryptedValue !== "string") {
-    // 非字符串直接返回（保持向后兼容，不在此抛错）
-    return encryptedValue;
-  }
-  if (!encryptedValue.startsWith("encrypted:")) {
-    return encryptedValue; // 未加密的值直接返回
+  if (encryptedValue === undefined || encryptedValue === null) return encryptedValue;
+  if (typeof encryptedValue !== "string") return encryptedValue;
+
+  if (encryptedValue.startsWith("encrypted:")) {
+    const parts = encryptedValue.split(":");
+    if (parts.length !== 3) throw new ValidationError("无效的旧版加密格式");
+    try {
+      return base64DecodeUtf8(parts[2]);
+    } catch (error) {
+      throw new ValidationError("旧版解密失败: " + error.message);
+    }
   }
 
-  // 从加密格式中提取值
-  const parts = encryptedValue.split(":");
-  if (parts.length !== 3) {
-    throw new ValidationError("无效的加密格式");
+  if (encryptedValue.startsWith("aes-gcm:")) {
+    const parts = encryptedValue.split(":");
+    if (parts.length !== 3) throw new ValidationError("无效的加密格式");
+    try {
+      const iv = base64DecodeToBytes(parts[1]);
+      const ciphertext = base64DecodeToBytes(parts[2]);
+      const key = await getAesKey(secret);
+      
+      const decrypted = await globalThis.crypto.subtle.decrypt(
+        { name: "AES-GCM", iv },
+        key,
+        ciphertext
+      );
+      
+      const decoder = new TextDecoder("utf-8");
+      return decoder.decode(decrypted);
+    } catch (error) {
+      throw new ValidationError("解密失败: " + error.message);
+    }
   }
 
-  try {
-    // 直接从加密值中提取原始值
-    const originalValue = base64DecodeUtf8(parts[2]);
-    return originalValue;
-  } catch (error) {
-    throw new ValidationError("解密失败: " + error.message);
-  }
+  return encryptedValue;
 }
 
 /**

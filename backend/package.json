@@ -8,7 +8,7 @@
     "test:parallel": "node --test",
     "dev": "wrangler dev --local",
     "dev:scheduled": "wrangler dev --local --test-scheduled",
-    "deploy": "wrangler publish",
+    "deploy": "wrangler deploy",
     "deploy:spa": "wrangler deploy --config wrangler.spa.toml",
     "docker-dev": "cross-env PORT=8787 ENCRYPTION_SECRET=default-encryption-key DATA_DIR=./data SCHEDULED_TICK_CRON=\"*/1 * * * *\" tsx unified-entry.js",
     "docker-start": "cross-env PORT=8787 DATA_DIR=/data tsx unified-entry.js"
