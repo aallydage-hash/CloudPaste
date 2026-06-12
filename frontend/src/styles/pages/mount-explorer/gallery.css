@@ -102,7 +102,7 @@
 }
 
 .masonry-image-container:hover .masonry-image {
-  transform: scale(1.05);
+  /* transform: scale(1.05); 移除悬停放大效果 */
 }
 
 /* 瀑布流悬浮信息层 */
