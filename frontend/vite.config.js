@@ -3,6 +3,7 @@ import vue from "@vitejs/plugin-vue";
 import { VitePWA } from "vite-plugin-pwa";
 import { fileURLToPath, URL } from "node:url";
 import Icons from "unplugin-icons/vite";
+import viteCompression from "vite-plugin-compression";
 import Components from "unplugin-vue-components/vite";
 import IconsResolver from "unplugin-icons/resolver";
 
@@ -65,6 +66,16 @@ export default defineConfig(({ command, mode }) => {
       }),
       Icons({
         compiler: "vue3",
+      }),
+      viteCompression({
+        verbose: true,
+        threshold: 10240,
+        algorithm: "gzip",
+      }),
+      viteCompression({
+        verbose: true,
+        threshold: 10240,
+        algorithm: "brotliCompress",
       }),
       enablePwa &&
         VitePWA({
