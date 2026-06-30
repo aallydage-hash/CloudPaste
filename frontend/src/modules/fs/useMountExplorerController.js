@@ -437,7 +437,7 @@ export function useMountExplorerController() {
     stateMachine.startLoadingDirectory(targetDirApi);
 
     try {
-      const data = await fsService.getDirectoryList(targetDirApi, { refresh });
+      const data = await fsService.getDirectoryList(targetDirApi, { refresh, paged: true, limit: 100 });
       if (taskId != null && taskId !== activeRouteTask) return;
       if (data === null) return;
       stateMachine.onDirectoryLoaded(data);
@@ -520,7 +520,7 @@ export function useMountExplorerController() {
 
       // 后台 revalidate：优先走 If-None-Match/304
       // 写操作后会 clearDirectoryListCache，因此仍会强制拉取最新数据。
-      const data = await fsService.prefetchDirectoryList(dirApiPath, { refresh: false, returnNullOnNotModified: true });
+      const data = await fsService.prefetchDirectoryList(dirApiPath, { refresh: false, returnNullOnNotModified: true, paged: true, limit: 100 });
       if (expectedTask !== activeRouteTask) return;
       if ((normalizeRouteKey(route.path) || route.path) !== expectedKey) return;
       if (cacheEpoch !== expectedEpoch) return;
@@ -597,7 +597,7 @@ export function useMountExplorerController() {
 
     directoryLoadingMore.value = true;
     try {
-      const more = await fsService.getDirectoryList(currentPath.value, { cursor });
+      const more = await fsService.getDirectoryList(currentPath.value, { cursor, paged: true, limit: 100 });
       if (!more || !Array.isArray(more.items)) {
         return false;
       }
@@ -651,7 +651,7 @@ export function useMountExplorerController() {
     if (prefetchMap.has(key)) return;
 
     try {
-      const data = await fsService.prefetchDirectoryList(toDirApiPath(dirPath));
+      const data = await fsService.prefetchDirectoryList(toDirApiPath(dirPath), { paged: true, limit: 100 });
       if (!data) return;
 
       setPrefetch(key, {

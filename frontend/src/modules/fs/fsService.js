@@ -287,9 +287,17 @@ export function useFsService() {
 
     const controller = new AbortController();
 
-    /** @type {{ refresh?: boolean; headers?: Record<string,string>; signal?: AbortSignal }} */
+    const cursor = options && options.cursor != null && String(options.cursor).trim() ? String(options.cursor).trim() : null;
+    const limitRaw = options && options.limit != null && options.limit !== "" ? Number(options.limit) : null;
+    const limit = limitRaw != null && Number.isFinite(limitRaw) && limitRaw > 0 ? Math.floor(limitRaw) : null;
+    const paged = options && options.paged === true;
+
+    /** @type {{ refresh?: boolean; cursor?: (string|null); limit?: (number|null); paged?: boolean; headers?: Record<string,string>; signal?: AbortSignal }} */
     const requestOptions = {
       refresh: options.refresh ?? false,
+      cursor,
+      limit,
+      paged,
       signal: controller.signal,
     };
 
@@ -303,8 +311,8 @@ export function useFsService() {
     }
 
     try {
-      // prefetch 只用于“首页”，因此 key 固定为 cursor/limit/paged 都为空
-      const baseKey = `${normalizedPath}|cursor=|limit=|paged=0`;
+      // prefetch 携带与 list 一致的 cache key
+      const baseKey = `${normalizedPath}|cursor=${cursor || ""}|limit=${limit || ""}|paged=${paged ? "1" : "0"}`;
       const cached = directoryListCache.get(baseKey) || null;
       if (!options.refresh && cached?.etag) {
         requestOptions.headers = {
